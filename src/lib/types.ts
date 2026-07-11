@@ -142,3 +142,19 @@ export function getGroupForCategory(code: string, num: number): ActivityGroup | 
 export function isMonopolyCategory(c: LicenseCategory): boolean {
   return Boolean(c.licensing_condition && c.licensing_condition.trim().length > 0);
 }
+
+export interface Woreda {
+  key: string;
+  label_en: string;
+  label_am: string;
+}
+
+export const woredas: Woreda[] = [
+  { key: "Amir-Nur Woreda", label_en: "Amir-Nur Woreda", label_am: "አሚር-ኑር ወረዳ" },
+  { key: "Abadir Woreda", label_en: "Abadir Woreda", label_am: "አባዲር ወረዳ" },
+  { key: "Shenkor Woreda", label_en: "Shenkor Woreda", label_am: "ሸንኮር ወረዳ" },
+  { key: "Jin'Eala Woreda", label_en: "Jin'Eala Woreda", label_am: "ጂንኤላ ወረዳ" },
+  { key: "Aboker Woreda", label_en: "Aboker Woreda", label_am: "አቦከር ወረዳ" },
+  { key: "Hakim Woreda", label_en: "Hakim Woreda", label_am: "ሀኪም ወረዳ" },
+];
+

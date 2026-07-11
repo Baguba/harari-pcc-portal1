@@ -18,10 +18,17 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Separator } from "@/components/ui/separator";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useApp } from "@/lib/store";
 import { t } from "@/lib/i18n";
 import { categories, splitRequirementItems } from "@/lib/data";
-import { isMonopolyCategory, type LicenseCategory } from "@/lib/types";
+import { isMonopolyCategory, type LicenseCategory, woredas } from "@/lib/types";
 import { toast } from "sonner";
 import { useAuthedFetch } from "./use-authed-fetch";
 
@@ -80,7 +87,7 @@ export function ApplyView({ code, num }: Props) {
   const [contactName, setContactName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [region, setRegion] = useState("Harari");
+  const [region, setRegion] = useState("Amir-Nur Woreda");
   const [city, setCity] = useState("Harar");
   const [addressLine, setAddressLine] = useState("");
   const [tinNumber, setTinNumber] = useState("");
@@ -107,7 +114,7 @@ export function ApplyView({ code, num }: Props) {
       setContactName(session.name || "");
       setEmail(session.email || "");
       setPhone(session.phone || "");
-      setRegion(session.region || "Harari");
+      setRegion(session.region || "Amir-Nur Woreda");
     }
   }, [session]);
 
@@ -516,12 +523,18 @@ export function ApplyView({ code, num }: Props) {
             <div className="grid sm:grid-cols-2 gap-4">
               <div>
                 <Label htmlFor="region">{t("apply.region", lang)}</Label>
-                <Input
-                  id="region"
-                  value={region}
-                  onChange={(e) => setRegion(e.target.value)}
-                  className="mt-1.5"
-                />
+                <Select value={region} onValueChange={setRegion}>
+                  <SelectTrigger id="region" className="mt-1.5 w-full">
+                    <SelectValue placeholder="Select Woreda" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {woredas.map((w) => (
+                      <SelectItem key={w.key} value={w.key}>
+                        {lang === "en" ? w.label_en : w.label_am}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
               <div>
                 <Label htmlFor="city">

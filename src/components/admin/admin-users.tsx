@@ -45,6 +45,7 @@ import {
 import { useApp } from "@/lib/store";
 import { useAuthedFetch } from "../portal/use-authed-fetch";
 import { toast } from "sonner";
+import { woredas } from "@/lib/types";
 
 interface User {
   id: string;
@@ -69,6 +70,7 @@ const emptyDraft = {
 
 export function AdminUsers() {
   const session = useApp((s) => s.session);
+  const lang = useApp((s) => s.lang);
   const authedFetch = useAuthedFetch();
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
@@ -254,7 +256,7 @@ export function AdminUsers() {
                   <tr className="text-left text-xs text-muted-foreground">
                     <th className="px-4 py-3 font-medium">User</th>
                     <th className="px-4 py-3 font-medium">Role</th>
-                    <th className="px-4 py-3 font-medium">Region</th>
+                    <th className="px-4 py-3 font-medium">Woreda</th>
                     <th className="px-4 py-3 font-medium">Status</th>
                     <th className="px-4 py-3 font-medium">Created</th>
                     <th className="px-4 py-3 font-medium text-right">Actions</th>
@@ -269,7 +271,7 @@ export function AdminUsers() {
                       </td>
                       <td className="px-4 py-3">{roleBadge(u.role)}</td>
                       <td className="px-4 py-3 text-xs text-muted-foreground">
-                        {u.region || "—"}
+                        {u.region ? (woredas.find(w => w.key === u.region)?.[lang === "en" ? "label_en" : "label_am"] || u.region) : "—"}
                       </td>
                       <td className="px-4 py-3">
                         <Badge
@@ -387,13 +389,22 @@ export function AdminUsers() {
                 </Select>
               </div>
               <div>
-                <Label htmlFor="u-region" className="text-xs">Region</Label>
-                <Input
-                  id="u-region"
-                  value={draft.region}
-                  onChange={(e) => setDraft({ ...draft, region: e.target.value })}
-                  className="mt-1.5"
-                />
+                <Label htmlFor="u-region" className="text-xs">Woreda</Label>
+                <Select
+                  value={draft.region || ""}
+                  onValueChange={(v) => setDraft({ ...draft, region: v })}
+                >
+                  <SelectTrigger id="u-region" className="mt-1.5 w-full">
+                    <SelectValue placeholder="Select Woreda" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {woredas.map((w) => (
+                      <SelectItem key={w.key} value={w.key}>
+                        {lang === "en" ? w.label_en : w.label_am}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
             </div>
             <div>

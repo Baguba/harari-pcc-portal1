@@ -14,9 +14,17 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useApp, type SessionUser } from "@/lib/store";
 import { t } from "@/lib/i18n";
 import { toast } from "sonner";
+import { woredas } from "@/lib/types";
 
 type Mode = "login" | "signup";
 
@@ -41,7 +49,7 @@ export function AuthView({ initialMode }: { initialMode: Mode }) {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
-  const [region, setRegion] = useState("Harari");
+  const [region, setRegion] = useState("Amir-Nur Woreda");
   const [loading, setLoading] = useState(false);
 
   // Password strength checks
@@ -292,13 +300,18 @@ export function AuthView({ initialMode }: { initialMode: Mode }) {
                 </div>
                 <div>
                   <Label htmlFor="region">{t("applicant.region", lang)}</Label>
-                  <Input
-                    id="region"
-                    value={region}
-                    onChange={(e) => setRegion(e.target.value)}
-                    className="mt-1.5"
-                    autoComplete="address-level1"
-                  />
+                  <Select value={region} onValueChange={setRegion}>
+                    <SelectTrigger id="region" className="mt-1.5 w-full">
+                      <SelectValue placeholder="Select Woreda" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {woredas.map((w) => (
+                        <SelectItem key={w.key} value={w.key}>
+                          {lang === "en" ? w.label_en : w.label_am}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
               </>
             )}
