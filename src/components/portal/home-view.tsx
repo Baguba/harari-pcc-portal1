@@ -165,8 +165,8 @@ export function HomeView() {
             <img src="/logo.png" alt="PCC Logo" />
             <div className="split-hero__brand-text">
               {lang === "en"
-                ? "Federal Democratic Republic of Ethiopia"
-                : "የኢትዮጵያ ፌዴራላዊ ዲሞክራሲያዊ ሪፐብሊክ"}
+                ? "Harari Regional State of Ethiopia"
+                : "የሐረሪ ሕዝብ ብሔራዊ ክልላዊ መንግሥት"}
               <strong>
                 {lang === "en"
                   ? "INNOVATION AND TECHNOLOGY AGENCY"

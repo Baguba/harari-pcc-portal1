@@ -83,8 +83,8 @@ const strings: StringMap = {
 
   // Home hero
   "home.hero.badge": {
-    en: "Federal Democratic Republic of Ethiopia · PCC",
-    am: "የኢትዮጵያ ፌዴራላዊ ዲሞክራሲያዊ ሪፐብሊክ · PCC",
+    en: "Harari Regional State of Ethiopia · PCC",
+    am: "የሐረሪ ሕዝብ ብሔራዊ ክልላዊ መንግሥት · PCC",
   },
   "home.hero.title": {
     en: "Get your ICT sector Professional Competence Certificate",
@@ -282,8 +282,8 @@ const strings: StringMap = {
 
   // Footer
   "footer.rights": {
-    en: "© PCC, Federal Democratic Republic of Ethiopia. All rights reserved.",
-    am: "© PCC፣ የኢትዮጵያ ፌዴራላዊ ዲሞክራሲያዊ ሪፐብሊክ። ሁሉም መብቶች የተጠበቁ ናቸው።",
+    en: "© PCC, Harari Regional State of Ethiopia. All rights reserved.",
+    am: "© PCC፣ የሐረሪ ሕዝብ ብሔራዊ ክልላዊ መንግሥት። ሁሉም መብቶች የተጠበቁ ናቸው።",
   },
   "footer.disclaimer": {
     en: "This portal is a compliance tool. The authoritative legal text remains the official directive published by PCC.",

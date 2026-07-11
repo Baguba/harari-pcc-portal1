@@ -234,8 +234,8 @@ export function CertificateView({
                 <div className="cert-authority-text">
                   <p className="cert-country">
                     {lang === "en"
-                      ? "Federal Democratic Republic of Ethiopia"
-                      : "የኢትዮጵያ ፌዴራላዊ ዲሞክራሲያዊ ሪፐብሊክ"}
+                      ? "Harari Regional State of Ethiopia"
+                      : "የሐረሪ ሕዝብ ብሔራዊ ክልላዊ መንግሥት"}
                   </p>
                   <p className="cert-ministry">
                     {lang === "en"
