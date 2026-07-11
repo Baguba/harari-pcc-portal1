@@ -1,0 +1,34 @@
+{
+  "directive_title_am": "በመገናኛና ኢንፎርሜሽን ቴክኖሎጂ ዘርፍ ለሚሰጡ የንግድ ስራ ፈቃዶች ሊሟሉ የሚገባቸውን የሙያ ብቃት መስፈርቶች ለመወሰን ተሻሽሎ የወጣ መመሪያ",
+  "directive_title_en": "Revised Directive to Determine the Professional Competence Requirements to be Fulfilled for Business Licenses Issued in the Communication and Information Technology Sector",
+  "directive_number": "Directive No. 1/2007 (E.C.) [Revised]",
+  "issuing_authority": "Innovation and Technology Agency (PCC), Federal Democratic Republic of Ethiopia",
+  "legal_basis": "Commercial Registration and Business Licensing Proclamation No. 686/2002, Article 30(3)",
+  "purpose_en": "To enable licensees operating in Communication and Information Technology business fields to provide quality service to customers by fulfilling the required minimum professional competence requirements.",
+  "scope_en": "Applies to the business fields for which the Innovation and Technology Agency issues professional competence certificates, under Proclamation No. 686/2002, Article 30(3).",
+  "certification_rules_en": [
+    "The Ministry issues a Professional Competence Certificate for the 45 business fields listed under Article 7 (sub-articles 1-45) of this Directive.",
+    "The Ministry may delegate competence-certification work to regional bodies responsible for coordinating and leading the ICT sector, as necessary.",
+    "No Professional Competence Certificate is issued unless the applicant is verified to have fulfilled the requirements set for that specific business field.",
+    "The applicant must pay the service fee set out in the Ministry's service-fee directive."
+  ],
+  "validity_period_en": "A Professional Competence Certificate is valid for 1 (one) year from the date it is issued.",
+  "renewal_en": "The certificate may be renewed for the same period (1 year) upon expiry.",
+  "penalties_en": "Any offense committed in relation to the implementation of this Directive is subject to administrative and criminal measures under the Proclamation.",
+  "repealed_directives_en": "This Directive repeals and revises the requirements listed in Annex 1 of Telecommunications Service Directive (Cable, Wireless Local Loop, Switching and Terminal Equipment Repair License) No. 2/1995, as well as the licensing conditions under Article 4(1) and (2) of the Value Added Services License Directive No. 3/2003.",
+  "amendment_en": "This Directive may be amended by the Ministry whenever necessary.",
+  "effective_date_en": "Effective from Meskerem 15, 2006 E.C.",
+  "signatory": "Dr. Debretsion Gebremichael, Deputy Prime Minister & Coordinator of the Finance and Economic Cluster, and Minister of Communication and Information Technology",
+  "total_business_categories": 45,
+  "standard_application_documents_note_en": "Most business categories require a largely standard base set of documents, with category-specific additions (e.g., an Ethio Telecom line contract for Telecenters, minimum capital proof for some repair categories, an investment license for foreign companies, etc.). The common/base set that recurs across nearly all categories is listed as 'standard_required_documents' below; each category also lists its own full document list verbatim from the directive (which will include this base set plus any extras).",
+  "standard_required_documents_en": [
+    "Application letter stating the applicant's (organization's or individual's) residence and business address and specifying the business license category applied for",
+    "Investment license (if a foreign company)",
+    "Business (commercial) registration certificate",
+    "Memorandum and articles of association (if the entity is a business association/company)",
+    "Taxpayer Identification Number (TIN) certificate",
+    "Educational credentials of the professional staff, plus proof of employment contract for the staff (to be submitted within 6 months if not available at application time)",
+    "2 passport-size photos of the applicant, or of the general manager if the applicant is a business association (for some categories)",
+    "Certificate of legal personality, if the applicant is a non-profit entity (for some categories)"
+  ]
+}

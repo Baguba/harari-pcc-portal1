@@ -1,0 +1,125 @@
+// MCIT Professional Competence Certificate Portal — Prisma schema
+// SQLite backend for: users, applications, news/announcements, notifications, audit log.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// Portal user — can be super_admin, admin (MCIT staff), or applicant (business owner)
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  // Plain-text only because there is no NextAuth session layer here; admins are seeded.
+  // In a real deployment this should be hashed (bcrypt/argon2).
+  password  String
+  role      String   @default("applicant") // "super_admin" | "admin" | "applicant"
+  phone     String?
+  region    String?
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  applications  Application[]
+  reviewedApplications Application[] @relation("ApplicationReviewer")
+  notifications Notification[]
+  auditLogs     AuditLog[]     @relation("AuditLogActor")
+}
+
+/// A license category application submitted by a business owner.
+model Application {
+  id            String   @id @default(cuid())
+  // Reference to the license category — code + num uniquely identifies it.
+  categoryCode  String
+  categoryNum   Int
+  categoryTitle String
+
+  // Applicant info
+  applicantType String   // "individual" | "organization"
+  organizationName String?
+  contactName   String
+  email         String
+  phone         String
+  region        String   @default("Harari")
+  city          String
+  addressLine   String
+  tinNumber     String?
+  nationalId    String?
+
+  // Self-check readiness snapshot at submission time (0-100)
+  readinessPercent Int
+
+  // Comma-separated list of file names that were uploaded (mock storage)
+  uploadedDocuments String
+
+  // Optional applicant note
+  notes         String?
+
+  status        String   @default("submitted") // "submitted" | "under_review" | "approved" | "rejected" | "revoked"
+  reviewNote    String?
+
+  submittedById String?
+  submitter     User?    @relation(fields: [submittedById], references: [id])
+
+  reviewedById  String?
+  reviewer      User?    @relation("ApplicationReviewer", fields: [reviewedById], references: [id])
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  reviewedAt    DateTime?
+
+  notifications Notification[]
+}
+
+/// News / announcements published by admins (e.g. directive changes, fee updates).
+model News {
+  id          String   @id @default(cuid())
+  titleEn     String
+  titleAm     String
+  bodyEn      String
+  bodyAm      String
+  category    String   @default("general") // "general" | "directive_change" | "fee" | "outage"
+  pinned      Boolean  @default(false)
+  published   Boolean  @default(false)
+  publishedAt DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  notifications Notification[]
+}
+
+/// In-app notification to a user (e.g. application status change, news published).
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title     String
+  body      String
+  type      String   @default("info") // "info" | "success" | "warning" | "application" | "news"
+  link      String?
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  applicationId String?
+  application   Application? @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+
+  newsId   String?
+  news     News?   @relation(fields: [newsId], references: [id], onDelete: Cascade)
+}
+
+/// Admin audit log — every privileged action is recorded.
+model AuditLog {
+  id        String   @id @default(cuid())
+  actorId   String?
+  actor     User?    @relation("AuditLogActor", fields: [actorId], references: [id])
+  action    String   // "user.create", "user.delete", "application.approve", "news.publish", ...
+  target    String?  // resource identifier (e.g. "user:abc", "application:def")
+  detail    String?
+  ip        String?
+  createdAt DateTime @default(now())
+}
