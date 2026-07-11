@@ -49,6 +49,24 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
+  const actorId = req.headers.get("x-actor-id");
+  if (!actorId) {
+    return NextResponse.json(
+      { error: "Authentication is required to submit applications." },
+      { status: 401 }
+    );
+  }
+
+  const actor = await db.user.findUnique({
+    where: { id: actorId },
+  });
+  if (!actor) {
+    return NextResponse.json(
+      { error: "Authenticated user not found." },
+      { status: 401 }
+    );
+  }
+
   const body = await req.json().catch(() => null);
   if (!body) {
     return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
@@ -119,7 +137,7 @@ export async function POST(req: NextRequest) {
       uploadedDocuments: String(body.uploadedDocuments || ""),
       notes: body.notes || null,
       status: "submitted",
-      submittedById: body.submittedById || null,
+      submittedById: actor.id,
     },
   });
 

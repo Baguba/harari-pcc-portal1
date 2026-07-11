@@ -96,10 +96,20 @@ export function AuthView({ initialMode }: { initialMode: Mode }) {
       const user = data.user as SessionUser;
       setSession(user);
 
+      // Get potential redirect from store (only valid for applicant role)
+      const redirect = useApp.getState().redirectAfterAuth;
+      if (redirect) {
+        useApp.setState({ redirectAfterAuth: null });
+      }
+
       // Sign-up is always applicant role. For login, route by role.
       if (mode === "signup") {
         toast.success("Account created successfully");
-        setView({ name: "applicant-dashboard" });
+        if (redirect) {
+          setView(redirect);
+        } else {
+          setView({ name: "applicant-dashboard" });
+        }
         return;
       }
 
@@ -113,7 +123,11 @@ export function AuthView({ initialMode }: { initialMode: Mode }) {
         toast.success(
           `${t("applicant.welcome", lang)}, ${user.name || user.email}`
         );
-        setView({ name: "applicant-dashboard" });
+        if (redirect && user.role === "applicant") {
+          setView(redirect);
+        } else {
+          setView({ name: "applicant-dashboard" });
+        }
       }
     } catch (e: unknown) {
       const msg = e instanceof Error ? e.message : "Authentication failed";

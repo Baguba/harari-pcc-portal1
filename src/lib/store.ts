@@ -35,6 +35,7 @@ interface AppState {
   scrollPositions: Record<string, number>;
   session: SessionUser | null;
   unreadCount: number;
+  redirectAfterAuth: View | null;
 
   setView: (v: View) => void;
   setLang: (l: Lang) => void;
@@ -51,10 +52,18 @@ export const useApp = create<AppState>((set, get) => ({
   scrollPositions: {},
   session: null,
   unreadCount: 0,
+  redirectAfterAuth: null,
 
   setView: (v) => {
     if (typeof window !== "undefined") {
       window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
+
+      // If user tries to apply and is not logged in, redirect to signup
+      if (v.name === "apply" && !get().session) {
+        set({ redirectAfterAuth: v });
+        v = { name: "signup" };
+      }
+
       const hash =
         v.name === "home" ? "" :
         v.name === "categories" ? "#/categories" :

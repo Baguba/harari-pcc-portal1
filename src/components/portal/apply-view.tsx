@@ -23,6 +23,7 @@ import { t } from "@/lib/i18n";
 import { categories, splitRequirementItems } from "@/lib/data";
 import { isMonopolyCategory, type LicenseCategory } from "@/lib/types";
 import { toast } from "sonner";
+import { useAuthedFetch } from "./use-authed-fetch";
 
 interface Props {
   code: string;
@@ -92,6 +93,15 @@ export function ApplyView({ code, num }: Props) {
 
   // Prefill from logged-in applicant session
   const session = useApp((s) => s.session);
+  const authedFetch = useAuthedFetch();
+
+  // Guard: require session to view or apply
+  useEffect(() => {
+    if (!session) {
+      setView({ name: "signup" });
+    }
+  }, [session, setView]);
+
   useEffect(() => {
     if (session?.role === "applicant") {
       setContactName(session.name || "");
@@ -101,6 +111,14 @@ export function ApplyView({ code, num }: Props) {
     }
   }, [session]);
 
+  if (!session) {
+    return (
+      <div className="container mx-auto max-w-3xl px-4 py-20 text-center text-muted-foreground">
+        Redirecting to sign up...
+      </div>
+    );
+  }
+
   if (!category) {
     return (
       <div className="container mx-auto max-w-3xl px-4 py-20 text-center text-muted-foreground">
@@ -108,9 +126,6 @@ export function ApplyView({ code, num }: Props) {
       </div>
     );
   }
-
-  // Encourage sign-up (but don't block — guests can still apply)
-  const showSignupNudge = !session;
 
   if (isMonopolyCategory(category)) {
     return (
@@ -199,7 +214,7 @@ export function ApplyView({ code, num }: Props) {
     }
     setSubmitting(true);
     try {
-      const res = await fetch("/api/applications", {
+      const res = await authedFetch("/api/applications", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -225,7 +240,7 @@ export function ApplyView({ code, num }: Props) {
             content: f.content,
           })),
           notes: notes || null,
-          submittedById: session?.role === "applicant" ? session.id : null,
+          submittedById: session.id,
         }),
       });
       if (!res.ok) {
@@ -399,32 +414,6 @@ export function ApplyView({ code, num }: Props) {
       </div>
 
       <div className="space-y-6">
-        {/* Sign-up nudge for guests */}
-        {showSignupNudge && (
-          <div className="rounded-lg border border-accent/30 bg-accent/10 p-3 flex items-center justify-between gap-3 flex-wrap">
-            <div className="text-xs text-accent-foreground/90 leading-relaxed flex-1 min-w-[200px]">
-              {lang === "en"
-                ? "Sign in to track this application, see review feedback, and download your certificate when approved. (You can still apply as a guest.)"
-                : "ይህን ማመልከቻ ለመከታተል፣ የግምገማ ግብረመልስ ለማየት፣ እና ሰርቲፊኬትዎ ሲሰጥ ለማውረድ ይግቡ። (እንደ እንግዳ መመዝገብ ይችላሉ።)"}
-            </div>
-            <div className="flex gap-2 flex-shrink-0">
-              <Button
-                size="sm"
-                variant="outline"
-                onClick={() => setView({ name: "login" })}
-              >
-                {t("nav.login", lang)}
-              </Button>
-              <Button
-                size="sm"
-                onClick={() => setView({ name: "signup" })}
-              >
-                {t("nav.signup", lang)}
-              </Button>
-            </div>
-          </div>
-        )}
-
         {/* Applicant info */}
         <Card>
           <CardHeader>
