@@ -239,7 +239,7 @@ export function ApplicantDashboardView() {
                         {a.contactName}
                       </div>
                       <div className="text-[11px] text-muted-foreground mt-1">
-                        {lang === "en" ? "Submitted" : "ቀርቧል"}:{" "}
+                        {lang === "en" ? "Submitted" : lang === "am" ? "ቀርቧል" : "Galchamee jira"}:{" "}
                         {new Date(a.createdAt).toLocaleDateString()}
                       </div>
                     </div>

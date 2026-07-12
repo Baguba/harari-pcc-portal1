@@ -304,43 +304,43 @@ export function ApplicantApplicationView({ id }: { id: string }) {
       <Card className="mb-6">
         <CardHeader>
           <CardTitle className="text-base">
-            {lang === "en" ? "Application information" : "የማመልከቻ መረጃ"}
+            {lang === "en" ? "Application information" : lang === "am" ? "የማመልከቻ መረጃ" : "Odeeffannoo Iyyannoo"}
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid sm:grid-cols-2 gap-3 text-sm">
             <Info icon={app.applicantType === "organization" ? Building2 : User}
-              label={lang === "en" ? "Type" : "አይነት"}
-              value={app.applicantType === "organization" ? "Organization" : "Individual"} />
+               label={lang === "en" ? "Type" : lang === "am" ? "አይነት" : "Gosa"}
+              value={app.applicantType === "organization" ? (lang === "en" ? "Organization" : lang === "am" ? "ድርጅት" : "Dhaabbata") : (lang === "en" ? "Individual" : lang === "am" ? "ግል" : "Dhuunfaa")} />
             {app.organizationName && (
-              <Info icon={Building2} label="Organization" value={app.organizationName} />
+              <Info icon={Building2} label={lang === "en" ? "Organization" : lang === "am" ? "ድርጅት" : "Dhaabbata"} value={app.organizationName} />
             )}
-            <Info icon={User} label={lang === "en" ? "Contact" : "መገናኛ"} value={app.contactName} />
+             <Info icon={User} label={lang === "en" ? "Contact" : lang === "am" ? "መገናኛ" : "Nama Quunnamtii"} value={app.contactName} />
             <Info icon={Mail} label="Email" value={app.email} />
-            <Info icon={Phone} label={lang === "en" ? "Phone" : "ስልክ"} value={app.phone} />
-            <Info icon={MapPin} label={lang === "en" ? "Address" : "አድራሻ"}
-              value={`${app.addressLine}, ${app.city}, ${app.region}`} />
+             <Info icon={Phone} label={lang === "en" ? "Phone" : lang === "am" ? "ስልክ" : "Bilbila"} value={app.phone} />
+             <Info icon={MapPin} label={lang === "en" ? "Address" : lang === "am" ? "አድራሻ" : "Teessoo"}
+              value={`${app.addressLine}, ${app.city}, ${woredas.find(w => w.key === app.region)?.[`label_${lang}` as keyof typeof w] || app.region}`} />
             {app.tinNumber && (
               <Info icon={FileText} label="TIN" value={app.tinNumber} />
             )}
-            <Info icon={Calendar} label={lang === "en" ? "Submitted" : "ቀርቧል"}
+             <Info icon={Calendar} label={lang === "en" ? "Submitted" : lang === "am" ? "ቀርቧል" : "Galchamee jira"}
               value={new Date(app.createdAt).toLocaleString()} />
           </div>
           {app.notes && (
             <div className="mt-4 pt-4 border-t border-border">
               <div className="text-xs font-semibold text-muted-foreground mb-1">
-                {lang === "en" ? "Your notes" : "የእርስዎ ማስታወሻዎች"}
+                 {lang === "en" ? "Your notes" : lang === "am" ? "የእርስዎ ማስታወሻዎች" : "Yaadannoowwan kee"}
               </div>
               <div className="text-xs bg-muted/40 rounded p-2">{app.notes}</div>
             </div>
           )}
           <div className="mt-4 pt-4 border-t border-border text-xs text-muted-foreground">
-            {lang === "en" ? "Documents uploaded" : "የተሰቀሉ ሰነዶች"}:{" "}
+             {lang === "en" ? "Documents uploaded" : lang === "am" ? "የተሰቀሉ ሰነዶች" : "Sanadoota ol-ka'an"}:{" "}
             {app.uploadedDocuments
               ? app.uploadedDocuments.split(",").length
               : 0}
             {" · "}
-            {lang === "en" ? "Readiness at submission" : "በማስገባት ጊዜ ዝግጁነት"}:{" "}
+             {lang === "en" ? "Readiness at submission" : lang === "am" ? "በማስገባት ጊዜ ዝግጁነት" : "Qophii yeroo galchamuu"}:{" "}
             <span className="font-semibold text-primary">{app.readinessPercent}%</span>
           </div>
         </CardContent>
@@ -350,7 +350,7 @@ export function ApplicantApplicationView({ id }: { id: string }) {
       <Card className="bg-muted/30">
         <CardContent className="p-4 text-center">
           <div className="text-[10px] text-muted-foreground uppercase tracking-wide mb-1">
-            {lang === "en" ? "Reference ID" : "ማመልከቻ ቁጥር"}
+             {lang === "en" ? "Reference ID" : lang === "am" ? "ማመልከቻ ቁጥር" : "Lakk. Eenyummeessaa"}
           </div>
           <div className="font-mono font-semibold text-sm break-all">
             {app.id}

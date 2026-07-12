@@ -131,12 +131,12 @@ export function NewsView() {
                   )}
                 </div>
                 <CardTitle className="text-lg leading-snug">
-                  {lang === "en" ? n.titleEn : n.titleAm}
+                  {lang === "en" ? n.titleEn : lang === "am" ? n.titleAm : (n.titleEn || n.titleAm)}
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-muted-foreground leading-relaxed whitespace-pre-line">
-                  {lang === "en" ? n.bodyEn : n.bodyAm}
+                  {lang === "en" ? n.bodyEn : lang === "am" ? n.bodyAm : (n.bodyEn || n.bodyAm)}
                 </p>
               </CardContent>
             </Card>

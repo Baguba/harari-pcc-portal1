@@ -124,7 +124,7 @@ export function AuthView({ initialMode }: { initialMode: Mode }) {
       // Login: route based on role
       if (user.role === "admin" || user.role === "super_admin") {
         toast.success(
-          `${lang === "en" ? "Welcome" : "እንኳን በደህና መጡ"}, ${user.name || user.email}`
+          `${lang === "en" ? "Welcome" : lang === "am" ? "እንኳን በደህና መጡ" : "Baga nagaan dhufte"}, ${user.name || user.email}`
         );
         setView({ name: "admin" });
       } else {
@@ -307,7 +307,7 @@ export function AuthView({ initialMode }: { initialMode: Mode }) {
                     <SelectContent>
                       {woredas.map((w) => (
                         <SelectItem key={w.key} value={w.key}>
-                          {lang === "en" ? w.label_en : w.label_am}
+                          {w[`label_${lang}` as keyof typeof w] || w.label_en}
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -363,7 +363,9 @@ export function AuthView({ initialMode }: { initialMode: Mode }) {
               <ShieldCheck className="h-3 w-3" aria-hidden />
               {lang === "en"
                 ? "Secure access for registered applicants and agency personnel."
-                : "ለተመዘገቡ አመልካቾች እና የኤጀንሲ ሰራተኞች ደህንነቱ የተጠበቀ መዳረሻ።"}
+                : lang === "am"
+                  ? "ለተመዘገቡ አመልካቾች እና የኤጀንሲ ሰራተኞች ደህንነቱ የተጠበቀ መዳረሻ።"
+                  : "Seensa mirkanaa'aa iyyattota galmaa'anii fi hojjettoota eejansiitiif."}
             </div>
           </div>
         </CardContent>

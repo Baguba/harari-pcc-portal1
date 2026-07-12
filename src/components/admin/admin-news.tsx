@@ -217,12 +217,14 @@ export function AdminNews() {
         <div>
           <h2 className="text-lg font-semibold flex items-center gap-2">
             <Newspaper className="h-5 w-5 text-primary" aria-hidden />
-            {lang === "en" ? "News & Announcements" : "ዜና እና ማስታወቂያዎች"}
+            {lang === "en" ? "News & Announcements" : lang === "am" ? "ዜና እና ማስታወቂያዎች" : "Oduu fi Beeksisa"}
           </h2>
           <p className="text-xs text-muted-foreground">
             {lang === "en"
               ? "Publish directive changes, fee updates, and announcements."
-              : "የመመሪያ ለውጦችን፣ የክፍያ ዝመናዎችን እና ማስታወቂያዎችን ያውጡ።"}
+              : lang === "am"
+                ? "የመመሪያ ለውጦችን፣ የክፍያ ዝመናዎችን እና ማስታወቂያዎችን ያውጡ።"
+                : "Haaromsawwan qajeelfamaa, kaffaltiiwwanii fi beeksisa adda addaa maxxansi."}
           </p>
         </div>
         <Button onClick={openCreate} className="gap-2">

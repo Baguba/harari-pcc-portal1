@@ -54,6 +54,7 @@ export interface ActivityGroup {
   key: ActivityGroupKey;
   label_en: string;
   label_am: string;
+  label_om: string;
   /** code prefix or set of code prefixes that belong to this group */
   codes: string[];
   icon: string;
@@ -64,6 +65,7 @@ export const activityGroups: ActivityGroup[] = [
     key: "manufacturing",
     label_en: "Manufacturing",
     label_am: "ማምረት",
+    label_om: "Oomishuu",
     codes: ["39121", "39122", "39123", "39129"],
     icon: "Factory",
   },
@@ -71,6 +73,7 @@ export const activityGroups: ActivityGroup[] = [
     key: "wholesale",
     label_en: "Wholesale",
     label_am: "የአሳይ ስርጭት",
+    label_om: "Gurgurtaa Guddaa",
     codes: ["61521", "61522", "61523", "61524", "61529"],
     icon: "Package",
   },
@@ -78,6 +81,7 @@ export const activityGroups: ActivityGroup[] = [
     key: "retail",
     label_en: "Retail",
     label_am: "ችርቻሮ",
+    label_om: "Gurgurtaa Xiqqaa",
     codes: ["62801", "62802", "62803", "62804", "62809"],
     icon: "ShoppingBag",
   },
@@ -85,6 +89,7 @@ export const activityGroups: ActivityGroup[] = [
     key: "repair",
     label_en: "Repair",
     label_am: "ጥገና",
+    label_om: "Suphaa",
     codes: ["63154"],
     icon: "Wrench",
   },
@@ -92,6 +97,7 @@ export const activityGroups: ActivityGroup[] = [
     key: "import",
     label_en: "Import",
     label_am: "ኢምፖርት",
+    label_om: "Galchuu",
     codes: ["65521", "65522", "65523", "65524", "65529"],
     icon: "Ship",
   },
@@ -99,13 +105,15 @@ export const activityGroups: ActivityGroup[] = [
     key: "export",
     label_en: "Export",
     label_am: "ኤክስፖርት",
+    label_om: "Erguu",
     codes: ["66421", "66422", "66423", "66429"],
     icon: "Plane",
   },
   {
     key: "postal_courier",
     label_en: "Postal & Courier",
-    label_am: "የደብዳቄ እና ኮሪዬር አገልግሎት",
+    label_am: "የደብዳቤ እና ኮሪዬር አገልግሎት",
+    label_om: "Poostaa fi Kuriiyeerii",
     codes: ["75110", "75120", "75190"],
     icon: "Mail",
   },
@@ -113,6 +121,7 @@ export const activityGroups: ActivityGroup[] = [
     key: "telecom_services",
     label_en: "Telecom Services",
     label_am: "የቴሌኮሙኒኬሽን አገልግሎቶች",
+    label_om: "Tajaajila Telekoomii",
     codes: ["75200", "75210", "75220", "75230", "75240", "75250", "75260", "75270"],
     icon: "Radio",
   },
@@ -120,6 +129,7 @@ export const activityGroups: ActivityGroup[] = [
     key: "computer_software",
     label_en: "Computer/Software Services",
     label_am: "የኮምፒውተር/ሶፍትዌር አገልግሎቶች",
+    label_om: "Tajaajila Kompiiwtara/Sooftiweerii",
     codes: ["86100", "86200", "86300", "86400", "86500", "86900"],
     icon: "Code",
   },
@@ -127,6 +137,7 @@ export const activityGroups: ActivityGroup[] = [
     key: "ict_consulting",
     label_en: "ICT Consulting",
     label_am: "የአይሲቲ ምክር",
+    label_om: "Gorsaa ICT",
     codes: ["88740"],
     icon: "Lightbulb",
   },
@@ -147,14 +158,15 @@ export interface Woreda {
   key: string;
   label_en: string;
   label_am: string;
+  label_om: string;
 }
 
 export const woredas: Woreda[] = [
-  { key: "Amir-Nur Woreda", label_en: "Amir-Nur Woreda", label_am: "አሚር-ኑር ወረዳ" },
-  { key: "Abadir Woreda", label_en: "Abadir Woreda", label_am: "አባዲር ወረዳ" },
-  { key: "Shenkor Woreda", label_en: "Shenkor Woreda", label_am: "ሸንኮር ወረዳ" },
-  { key: "Jin'Eala Woreda", label_en: "Jin'Eala Woreda", label_am: "ጂንኤላ ወረዳ" },
-  { key: "Aboker Woreda", label_en: "Aboker Woreda", label_am: "አቦከር ወረዳ" },
-  { key: "Hakim Woreda", label_en: "Hakim Woreda", label_am: "ሀኪም ወረዳ" },
+  { key: "Amir-Nur Woreda", label_en: "Amir-Nur Woreda", label_am: "አሚር-ኑር ወረዳ", label_om: "Aanaa Amiir-Nuur" },
+  { key: "Abadir Woreda", label_en: "Abadir Woreda", label_am: "አባዲር ወረዳ", label_om: "Aanaa Abadiir" },
+  { key: "Shenkor Woreda", label_en: "Shenkor Woreda", label_am: "ሸንኮር ወረዳ", label_om: "Aanaa Sheenkor" },
+  { key: "Jin'Eala Woreda", label_en: "Jin'Eala Woreda", label_am: "ጂንኤላ ወረዳ", label_om: "Aanaa Jin'Ealaa" },
+  { key: "Aboker Woreda", label_en: "Aboker Woreda", label_am: "አቦከር ወረዳ", label_om: "Aanaa Abookar" },
+  { key: "Hakim Woreda", label_en: "Hakim Woreda", label_am: "ሀኪም ወረዳ", label_om: "Aanaa Haakiim" },
 ];
 

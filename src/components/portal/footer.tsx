@@ -35,7 +35,7 @@ export function Footer() {
           {/* Quick links */}
           <div>
             <div className="font-semibold text-sm mb-3">
-              {lang === "en" ? "Quick links" : "ፈጣን አገናኞች"}
+              {lang === "en" ? "Quick links" : lang === "am" ? "ፈጣን አገናኞች" : "Fungasoota Saffisaa"}
             </div>
             <ul className="space-y-2 text-sm">
               <li>
@@ -76,7 +76,7 @@ export function Footer() {
           {/* Contact */}
           <div>
             <div className="font-semibold text-sm mb-3">
-              {lang === "en" ? "Contact" : "አግኙን"}
+              {lang === "en" ? "Contact" : lang === "am" ? "አግኙን" : "Quunnamtii"}
             </div>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li className="flex items-start gap-2">
@@ -84,7 +84,9 @@ export function Footer() {
                 <span>
                   {lang === "en"
                     ? "Innovation and Technology Agency, Harari, Ethiopia"
-                    : "የመገናኛና ኢንፎርሜሽን ቴክኖሎጂ ሚኒስቴር፣ ሐረሪ፣ ኢትዮጵያ"}
+                    : lang === "am"
+                      ? "የመገናኛና ኢንፎርሜሽን ቴክኖሎጂ ሚኒስቴር፣ ሐረሪ፣ ኢትዮጵያ"
+                      : "Eejansii Inoviishinii fi Teknolojii, Hararii, Itoophiyaa"}
                 </span>
               </li>
               <li className="flex items-center gap-2">
@@ -109,7 +111,9 @@ export function Footer() {
           <span className="mx-2">·</span>
           {lang === "en"
             ? "Harari Region · Directive No. 1/2007 E.C. (Revised)"
-            : "የሐረሪ ክልል · መመሪያ ቁጥር 1/2007 ዓ.ም. (ተሻሽሎ)"}
+            : lang === "am"
+              ? "የሐረሪ ክልል · መመሪያ ቁጥር 1/2007 ዓ.ም. (ተሻሽሎ)"
+              : "Naannoo Hararii · Qajeelfama Lakk. 1/2007 B.A. (Fooyya'e)"}
         </div>
       </div>
     </footer>

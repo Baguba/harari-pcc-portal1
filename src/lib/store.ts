@@ -18,7 +18,7 @@ export type View =
   | { name: "applicant-dashboard" }
   | { name: "applicant-application"; id: string };
 
-export type Lang = "en" | "am";
+export type Lang = "en" | "am" | "om";
 
 export interface SessionUser {
   id: string;
@@ -84,7 +84,7 @@ export const useApp = create<AppState>((set, get) => ({
     set({ view: v });
   },
   setLang: (l) => set({ lang: l }),
-  toggleLang: () => set((s) => ({ lang: s.lang === "en" ? "am" : "en" })),
+  toggleLang: () => set((s) => ({ lang: s.lang === "en" ? "am" : s.lang === "am" ? "om" : "en" })),
   setSession: (s) => set({ session: s }),
   setUnreadCount: (n) => set({ unreadCount: n }),
   saveScroll: (key, y) =>

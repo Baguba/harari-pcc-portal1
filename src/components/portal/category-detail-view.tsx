@@ -135,7 +135,7 @@ export function CategoryDetailView({ code, num }: Props) {
         {group && (
           <Badge variant="secondary" className="gap-1.5">
             <ActivityIcon name={group.icon} className="h-3 w-3" />
-            {lang === "en" ? group.label_en : group.label_am}
+            {group[`label_${lang}` as keyof typeof group] || group.label_en}
           </Badge>
         )}
       </div>
@@ -324,7 +324,9 @@ export function CategoryDetailView({ code, num }: Props) {
                     <p className="text-[11px] text-muted-foreground">
                       {lang === "en"
                         ? "Reach at least 50% readiness to start an application."
-                        : "ማመልከቻ ለመጀመር ቢያንስ 50% ዝግጁነት ይኑርዎት።"}
+                        : lang === "am"
+                          ? "ማመልከቻ ለመጀመር ቢያንስ 50% ዝግጁነት ይኑርዎት።"
+                          : "Iyyannoo jalqabuuf yoo xiqqaate qophii 50% qabaachuu qabdu."}
                     </p>
                   )}
                 </CardContent>
@@ -340,7 +342,9 @@ export function CategoryDetailView({ code, num }: Props) {
                     <div className="text-xs text-muted-foreground">
                       {lang === "en"
                         ? "Submit your application with the required documents."
-                        : "ማመልከቻዎን ከሚገቡ ሰነዶች ጋር ያስገቡ።"}
+                        : lang === "am"
+                          ? "ማመልከቻዎን ከሚገቡ ሰነዶች ጋር ያስገቡ።"
+                          : "Iyyannoo kee sanadoota barbaachisan waliin galchi."}
                     </div>
                   </div>
                   <Button
@@ -364,7 +368,7 @@ export function CategoryDetailView({ code, num }: Props) {
             <CardHeader>
               <CardTitle className="text-base flex items-center gap-2">
                 <ShieldCheck className="h-4 w-4 text-primary" aria-hidden />
-                {lang === "en" ? "General rules" : "አጠቃላይ ህጎች"}
+                {lang === "en" ? "General rules" : lang === "am" ? "አጠቃላይ ህጎች" : "Seerota waliigalaa"}
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4 text-sm">
@@ -397,7 +401,7 @@ export function CategoryDetailView({ code, num }: Props) {
                   <AccordionItem value="docs" className="border-0">
                     <AccordionTrigger className="text-xs py-2 hover:no-underline">
                       {directive.standard_required_documents_en.length}{" "}
-                      {lang === "en" ? "documents" : "ሰነዶች"}
+                      {lang === "en" ? "documents" : lang === "am" ? "ሰነዶች" : "sanadoota"}
                     </AccordionTrigger>
                     <AccordionContent>
                       <ul className="text-[11px] space-y-1.5 list-disc pl-4">
@@ -417,7 +421,9 @@ export function CategoryDetailView({ code, num }: Props) {
               <div className="text-xs text-muted-foreground leading-relaxed">
                 {lang === "en"
                   ? "A certificate is valid for 1 year and must be renewed for the same period after expiry. No certificate is granted until all requirements are verified."
-                  : "ሰርቲፊኬቱ 1 ዓመት ይከናወናል እና ካለቀ በኋላ ለተመሳሳይ ጊዜ መነሳት ይኖርበታል። ሁሉም መስፈርቶች ከመረጋገጣቸው በፊት ምንም ሰርቲፊኬት አይሰጥም።"}
+                  : lang === "am"
+                    ? "ሰርቲፊኬቱ 1 ዓመት ይከናወናል እና ካለቀ በኋላ ለተመሳሳይ ጊዜ መነሳት ይኖርበታል። ሁሉም መስፈርቶች ከመረጋገጣቸው በፊት ምንም ሰርቲፊኬት አይሰጥም።"
+                    : "Waraqaan ragaa waggaa 1f kan hojjetu yoo ta'u erga yeroon isaa darbee yeroo walfakkaataaf haaromfamuu qaba. Ulaagaaleen hundi osoo hin mirkaneeffamin waraqaan ragaa hin kennamu."}
               </div>
             </CardContent>
           </Card>

@@ -67,24 +67,30 @@ export function HomeView() {
     {
       title: lang === "en"
         ? "Get Your ICT Sector Professional Competence Certificate"
-        : "የአይሲቲ ዘርፍ የሙያ ብቃት ሰርቲፊኬትዎን ያግኙ",
-      summary: lang === "en" ? "PCC Portal" : "የPCC ፖርታል",
+        : lang === "am"
+          ? "የአይሲቲ ዘርፍ የሙያ ብቃት ሰርቲፊኬትዎን ያግኙ"
+          : "Waraqaa Ragaa Dandeettii Ogummaa Sektara ICT Argadhu",
+      summary: lang === "en" ? "PCC Portal" : lang === "am" ? "የPCC ፖርታል" : "Portaala PCC",
       image: "/hero-bg.png",
       action: () => setView({ name: "categories" }),
     },
     {
       title: lang === "en"
         ? "Browse 45 ICT License Categories"
-        : "45 የአይሲቲ የፈቃድ ምድቦችን ይመልከቱ",
-      summary: lang === "en" ? "License categories" : "የፈቃድ ምድቦች",
+        : lang === "am"
+          ? "45 የአይሲቲ የፈቃድ ምድቦችን ይመልከቱ"
+          : "Ramaddii Hayyama Sektara ICT 45 Ilaali",
+      summary: lang === "en" ? "License categories" : lang === "am" ? "የፈቃድ ምድቦች" : "Ramaddii Hayyamaa",
       image: "/hero-bg-2.jpg", // Used user uploaded image
       action: () => setView({ name: "categories" }),
     },
     {
       title: lang === "en"
         ? "Apply Online — Track Your Application Status"
-        : "በመስመር ላይ ያመልክቱ — ማመልከቻዎን ይከታተሉ",
-      summary: lang === "en" ? "Applications" : "ማመልከቻዎች",
+        : lang === "am"
+          ? "በመስመር ላይ ያመልክቱ — ማመልከቻዎን ይከታተሉ"
+          : "Karaa Intarneetiin Iyyadhu — Haala Iyyannoo Kee Hordofi",
+      summary: lang === "en" ? "Applications" : lang === "am" ? "ማመልከቻዎች" : "Iyyannoolee",
       image: "/hero-bg.png", // Change to another image like "/hero-bg-3.png" if you have one
       action: () => setView({ name: "login" }),
     },
@@ -149,8 +155,8 @@ export function HomeView() {
 
   const stats = [
     { label: t("home.stats.categories", lang), value: "45" },
-    { label: t("home.stats.validity", lang), value: lang === "en" ? "1 year" : "1 ዓመት" },
-    { label: t("home.stats.region", lang), value: lang === "en" ? "Harari" : "ሐረሪ" },
+    { label: t("home.stats.validity", lang), value: lang === "en" ? "1 year" : lang === "am" ? "1 ዓመት" : "waggaa 1" },
+    { label: t("home.stats.region", lang), value: lang === "en" ? "Harari" : lang === "am" ? "ሐረሪ" : "Hararii" },
     { label: t("home.stats.years", lang), value: "2007 E.C." },
   ];
 
@@ -166,11 +172,15 @@ export function HomeView() {
             <div className="split-hero__brand-text">
               {lang === "en"
                 ? "Harari Regional State of Ethiopia"
-                : "የሐረሪ ሕዝብ ብሔራዊ ክልላዊ መንግሥት"}
+                : lang === "am"
+                  ? "የሐረሪ ሕዝብ ብሔራዊ ክልላዊ መንግሥት"
+                  : "Mootummaa Naannoo Hararii Itoophiyaa"}
               <strong>
                 {lang === "en"
                   ? "INNOVATION AND TECHNOLOGY AGENCY"
-                  : "የኢኖቬሽን እና ቴክኖሎጂ ኤጀንሲ"}
+                  : lang === "am"
+                    ? "የኢኖቬሽን እና ቴክኖሎጂ ኤጀንሲ"
+                    : "EEJANSIIN INOVIISHINII FI TEKNOLOJII"}
               </strong>
             </div>
           </div>
@@ -181,9 +191,13 @@ export function HomeView() {
               <>
                 ICT SECTOR: <span>PROFESSIONAL COMPETENCE</span> CERTIFICATE
               </>
-            ) : (
+            ) : lang === "am" ? (
               <>
                 የአይሲቲ ዘርፍ: <span>የሙያ ብቃት</span> ሰርቲፊኬት
+              </>
+            ) : (
+              <>
+                SEKTARA ICT: WARAQAA RAGAA <span>DANDEETTII OGUMMAA</span>
               </>
             )}
           </h1>
@@ -196,7 +210,7 @@ export function HomeView() {
             <p>
               {t("home.hero.subtitle", lang)}
             </p>
-            <cite>— {lang === "en" ? "Innovation and Technology Agency" : "የኢኖቬሽን እና ቴክኖሎጂ ኤጀንሲ"}</cite>
+            <cite>— {lang === "en" ? "Innovation and Technology Agency" : lang === "am" ? "የኢኖቬሽን እና ቴክኖሎጂ ኤጀንሲ" : "Eejansii Inoviishinii fi Teknolojii"}</cite>
           </div>
 
           {/* CTA */}
@@ -232,7 +246,7 @@ export function HomeView() {
                 <h2 className="split-hero__slide-title">{slide.title}</h2>
                 <div className="split-hero__slide-summary">{slide.summary}</div>
                 <button className="split-hero__slide-btn" onClick={slide.action}>
-                  {lang === "en" ? "READ MORE" : "ተጨማሪ ያንብቡ"}
+                  {lang === "en" ? "READ MORE" : lang === "am" ? "ተጨማሪ ያንብቡ" : "DUBBISI"}
                 </button>
               </div>
             </div>
@@ -344,10 +358,10 @@ export function HomeView() {
                       <ActivityIcon name={g.icon} className="h-5 w-5" />
                     </div>
                     <div className="font-semibold text-sm leading-tight">
-                      {lang === "en" ? g.label_en : g.label_am}
+                      {g[`label_${lang}` as keyof typeof g]}
                     </div>
                     <div className="text-xs text-muted-foreground">
-                      {g.codes.length} {lang === "en" ? "categories" : "ምድቦች"}
+                      {g.codes.length} {lang === "en" ? "categories" : lang === "am" ? "ምድቦች" : "ramaddiiwwan"}
                     </div>
                   </CardContent>
                 </Card>
@@ -379,7 +393,7 @@ export function HomeView() {
                 </div>
                 <div className="flex-1">
                   <h3 className="text-xl font-bold mb-2">
-                    {lang === "en" ? "Legal basis" : "ህጋዊ መሠረት"}
+                    {lang === "en" ? "Legal basis" : lang === "am" ? "ህጋዊ መሠረት" : "Bu'uura seeraa"}
                   </h3>
                   <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
                     {directive.legal_basis}
@@ -435,7 +449,7 @@ export function HomeView() {
               className="gap-2 self-start"
             >
               <Newspaper className="h-4 w-4" aria-hidden />
-              {lang === "en" ? "View all" : "ሁሉንም ይዩ"}
+              {lang === "en" ? "View all" : lang === "am" ? "ሁሉንም ይዩ" : "Hunda ilaali"}
             </Button>
           </div>
           {loadingNews ? (
@@ -449,7 +463,9 @@ export function HomeView() {
               <CardContent className="py-10 text-center text-sm text-muted-foreground">
                 {lang === "en"
                   ? "No news published yet."
-                  : "እስካሁን ዜና አልተወጣም።"}
+                  : lang === "am"
+                    ? "እስካሁን ዜና አልተወጣም።"
+                    : "Hanga ammaatti oduun hin maxxanfamne."}
               </CardContent>
             </Card>
           ) : (
@@ -466,12 +482,12 @@ export function HomeView() {
                       </Badge>
                     </div>
                     <CardTitle className="text-base leading-snug">
-                      {lang === "en" ? n.titleEn : n.titleAm}
+                      {lang === "en" ? n.titleEn : lang === "am" ? n.titleAm : (n.titleEn || n.titleAm)}
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="flex-1 flex flex-col">
                     <p className="text-xs text-muted-foreground line-clamp-3 mb-3 flex-1">
-                      {lang === "en" ? n.bodyEn : n.bodyAm}
+                      {lang === "en" ? n.bodyEn : lang === "am" ? n.bodyAm : (n.bodyEn || n.bodyAm)}
                     </p>
                     {n.publishedAt && (
                       <div className="text-[10px] text-muted-foreground flex items-center gap-1">
@@ -496,12 +512,16 @@ export function HomeView() {
               <h2 className="text-2xl md:text-3xl font-bold mb-3">
                 {lang === "en"
                   ? "Ready to start your application?"
-                  : "ማመልከቻ ለመጀመር ዝግጁ ነዎት?"}
+                  : lang === "am"
+                    ? "ማመልከቻ ለመጀመር ዝግጁ ነዎት?"
+                    : "Iyyannoo kee jalqabuuf qophiidhaa?"}
               </h2>
               <p className="text-white/80 mb-6 max-w-2xl mx-auto text-sm">
                 {lang === "en"
                   ? "Browse the 45 fixed ICT sector license categories, check your readiness, and submit your application to PCC."
-                  : "45 የተወሰኑ የአይሲቲ ዘርፍ የፈቃድ ምድቦችን ይመልከቱ፣ ዝግጁነትዎን ያረጋግጡ፣ እና ማመልከቻዎን ወደ PCC ያስገቡ።"}
+                  : lang === "am"
+                    ? "45 የተወሰኑ የአይሲቲ ዘርፍ የፈቃድ ምድቦችን ይመልከቱ፣ ዝግጁነትዎን ያረጋግጡ፣ እና ማመልከቻዎን ወደ PCC ያስገቡ።"
+                    : "Ramaddiiwwan hayyama sektara ICT dhaabbatoo 45 ilaali, qophii kee sakatta'i, iyyannoo kees PCC'tti galchi."}
               </p>
               <Button
                 size="lg"

@@ -188,18 +188,20 @@ export function ApplyView({ code, num }: Props) {
       return t("apply.org_name", lang) + " is required.";
     if (!contactName.trim()) return t("apply.contact_name", lang) + " is required.";
     if (!email.trim() || !email.includes("@"))
-      return t("apply.email", lang) + " is required.";
-    if (!phone.trim()) return t("apply.phone", lang) + " is required.";
-    if (!city.trim()) return t("apply.city", lang) + " is required.";
-    if (!addressLine.trim()) return t("apply.address", lang) + " is required.";
+      return t("apply.email", lang) + (lang === "en" ? " is required." : lang === "am" ? " ያስፈልጋል።" : " barbaachisaadha.");
+    if (!phone.trim()) return t("apply.phone", lang) + (lang === "en" ? " is required." : lang === "am" ? " ያስፈልጋል።" : " barbaachisaadha.");
+    if (!city.trim()) return t("apply.city", lang) + (lang === "en" ? " is required." : lang === "am" ? " ያስፈልጋል።" : " barbaachisaadha.");
+    if (!addressLine.trim()) return t("apply.address", lang) + (lang === "en" ? " is required." : lang === "am" ? " ያስፈልጋል።" : " barbaachisaadha.");
     const cleanNid = nationalId.replace(/[\s-]/g, "");
     if (!cleanNid) {
-      return t("apply.national_id", lang) + " " + (lang === "en" ? "is required." : "ያስፈልጋል።");
+      return t("apply.national_id", lang) + " " + (lang === "en" ? "is required." : lang === "am" ? "ያስፈልጋል።" : "barbaachisaadha.");
     }
     if (!/^\d{16}$/.test(cleanNid)) {
       return lang === "en"
         ? "National ID must be exactly a 16-digit number."
-        : "ብሔራዊ መታወቂያው በትክክል ባለ 16 አሃዝ ቁጥር መሆን አለበት።";
+        : lang === "am"
+          ? "ብሔራዊ መታወቂያው በትክክል ባለ 16 አሃዝ ቁጥር መሆን አለበት።"
+          : "Eenyummaan biyyaalessaa sirriitti lakkoofsa dijiitii 16 ta'uu qaba.";
     }
     // Require at least 50% of documents uploaded
     const docKeys = Object.keys(uploadedFiles);
@@ -208,7 +210,9 @@ export function ApplyView({ code, num }: Props) {
     if (uploadedCount < minRequired) {
       return lang === "en"
         ? `Please upload at least ${minRequired} of ${documentItems.length} required documents.`
-        : `እባክዎ ቢያንስ ${minRequired} ከ ${documentItems.length} የሚገቡ ሰነዶችን ይስቀሉ።`;
+        : lang === "am"
+          ? `እባክዎ ቢያንስ ${minRequired} ከ ${documentItems.length} የሚገቡ ሰነዶችን ይስቀሉ።`
+          : `Maaloo yoo xiqqaate sanadoota barbaachisan ${documentItems.length} keessaa ${minRequired} ol-kaa'aa.`;
     }
     return null;
   };
@@ -293,7 +297,7 @@ export function ApplyView({ code, num }: Props) {
             <div className="bg-muted/40 rounded-lg p-4 space-y-2 text-sm">
               <div className="flex justify-between gap-4">
                 <span className="text-muted-foreground">
-                  {lang === "en" ? "Reference ID" : "ማመልከቻ ቁጥር"}
+                  {lang === "en" ? "Reference ID" : lang === "am" ? "ማመልከቻ ቁጥር" : "Lakk. Eenyummeessaa"}
                 </span>
                 <span className="font-mono font-semibold text-xs">
                   {submissionId?.slice(0, 18) || "—"}
@@ -301,7 +305,7 @@ export function ApplyView({ code, num }: Props) {
               </div>
               <div className="flex justify-between gap-4">
                 <span className="text-muted-foreground">
-                  {lang === "en" ? "Category" : "ምድብ"}
+                  {lang === "en" ? "Category" : lang === "am" ? "ምድብ" : "Ramaddii"}
                 </span>
                 <span className="font-medium text-right">
                   {category.code} — {category.title_en}
@@ -309,7 +313,7 @@ export function ApplyView({ code, num }: Props) {
               </div>
               <div className="flex justify-between gap-4">
                 <span className="text-muted-foreground">
-                  {lang === "en" ? "Applicant" : "አመልካች"}
+                  {lang === "en" ? "Applicant" : lang === "am" ? "አመልካች" : "Iyyataa"}
                 </span>
                 <span className="font-medium">
                   {organizationName || contactName}
@@ -330,22 +334,30 @@ export function ApplyView({ code, num }: Props) {
                 <li>
                   {lang === "en"
                     ? "PCC staff will review your application and uploaded documents."
-                    : "የPCC ሰራተኞች ማመልከቻዎን እና ሰነዶችዎን ያጣራሉ።"}
+                    : lang === "am"
+                      ? "የPCC ሰራተኞች ማመልከቻዎን እና ሰነዶችዎን ያጣራሉ።"
+                      : "Hojjettoonni PCC iyyannoo fi sanadoota kee ni gamaaggamu."}
                 </li>
                 <li>
                   {lang === "en"
                     ? "If additional information is needed, you will be contacted at the email/phone provided."
-                    : "ተጨማሪ መረጃ ካስፈለገ በኢሜይል/ስልክ ይገናኛሉ።"}
+                    : lang === "am"
+                      ? "ተጨማሪ መረጃ ካስፈለገ በኢሜይል/ስልክ ይገናኛሉ።"
+                      : "Odeeffannoon dabalataa yoo barbaachise, imeelii/bilbila keetiin si quunnamna."}
                 </li>
                 <li>
                   {lang === "en"
                     ? "The service fee is paid per the Ministry's service-fee directive."
-                    : "የአገልግሎት ክፍያ በሚኒስቴር የአገልግሎት ክፍያ መመሪያ ይከፈላል።"}
+                    : lang === "am"
+                      ? "የአገልግሎት ክፍያ በሚኒስቴር የአገልግሎት ክፍያ መመሪያ ይከፈላል።"
+                      : "Kaffaltiin tajaajilaa qajeelfama kaffaltii tajaajilaatiin kaffalama."}
                 </li>
                 <li>
                   {lang === "en"
                     ? "Once approved, your Professional Competence Certificate will be issued (valid for 1 year)."
-                    : "ከጸደቀ የሙያ ብቃት ሰርቲፊኬትዎ ይሰጥልዎታል (1 ዓመት ይከናወናል)።"}
+                    : lang === "am"
+                      ? "ከጸደቀ የሙያ ብቃት ሰርቲፊኬትዎ ይሰጥልዎታል (1 ዓመት ይከናወናል)።"
+                      : "Yoo mirkanaa'e, waraqaan ragaa kee ni kennama (waggaa 1f kan hojjetu)."}
                 </li>
               </ol>
             </div>
@@ -360,7 +372,7 @@ export function ApplyView({ code, num }: Props) {
                   }
                   className="gap-2"
                 >
-                  {lang === "en" ? "Track this application" : "ይህን ማመልከቻ ይከታተሉ"}
+                  {lang === "en" ? "Track this application" : lang === "am" ? "ይህን ማመልከቻ ይከታተሉ" : "Iyyannoo kana hordofi"}
                   <ArrowRight className="h-4 w-4" aria-hidden />
                 </Button>
               )}
@@ -530,7 +542,7 @@ export function ApplyView({ code, num }: Props) {
                   <SelectContent>
                     {woredas.map((w) => (
                       <SelectItem key={w.key} value={w.key}>
-                        {lang === "en" ? w.label_en : w.label_am}
+                        {w[`label_${lang}` as keyof typeof w] || w.label_en}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -600,7 +612,9 @@ export function ApplyView({ code, num }: Props) {
             <p className="text-xs text-muted-foreground">
               {lang === "en"
                 ? `Upload at least ${Math.ceil(documentItems.length * 0.5)} of ${documentItems.length} required documents. Max 10MB each.`
-                : `ቢያንስ ${Math.ceil(documentItems.length * 0.5)} ከ ${documentItems.length} የሚገቡ ሰነዶችን ይስቀሉ። ከፍተኛ 10MB እያንዳንዱ።`}
+                : lang === "am"
+                  ? `ቢያንስ ${Math.ceil(documentItems.length * 0.5)} ከ ${documentItems.length} የሚገቡ ሰነዶችን ይስቀሉ። ከፍተኛ 10MB እያንዳንዱ።`
+                  : `Yoo xiqqaate sanadoota barbaachisan ${documentItems.length} keessaa ${Math.ceil(documentItems.length * 0.5)} ol-kaa'i. Tokkoon tokkoon isaanii 10MB qofa.`}
             </p>
           </CardHeader>
           <CardContent className="space-y-3">
@@ -673,7 +687,9 @@ export function ApplyView({ code, num }: Props) {
               placeholder={
                 lang === "en"
                   ? "Add any context or special requests for the reviewer…"
-                  : "ለግምገማ ሰው ማንኛውንም ተጨማሪ መረጃ ያክሉ…"
+                  : lang === "am"
+                    ? "ለግምገማ ሰው ማንኛውንም ተጨማሪ መረጃ ያክሉ…"
+                    : "Yaada dabalataa ykn gaaffii addaa yoo qabaatte gamaaggamaaf barreessi…"
               }
               className="min-h-[80px]"
             />

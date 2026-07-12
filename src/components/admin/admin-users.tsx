@@ -271,7 +271,7 @@ export function AdminUsers() {
                       </td>
                       <td className="px-4 py-3">{roleBadge(u.role)}</td>
                       <td className="px-4 py-3 text-xs text-muted-foreground">
-                        {u.region ? (woredas.find(w => w.key === u.region)?.[lang === "en" ? "label_en" : "label_am"] || u.region) : "—"}
+                        {u.region ? (woredas.find(w => w.key === u.region)?.[`label_${lang}` as keyof typeof w] || u.region) : "—"}
                       </td>
                       <td className="px-4 py-3">
                         <Badge
@@ -400,7 +400,7 @@ export function AdminUsers() {
                   <SelectContent>
                     {woredas.map((w) => (
                       <SelectItem key={w.key} value={w.key}>
-                        {lang === "en" ? w.label_en : w.label_am}
+                        {w[`label_${lang}` as keyof typeof w] || w.label_en}
                       </SelectItem>
                     ))}
                   </SelectContent>

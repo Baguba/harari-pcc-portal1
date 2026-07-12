@@ -187,7 +187,9 @@ export function AdminDashboard() {
             <span className="text-muted-foreground">
               {lang === "en"
                 ? "new applications in the last 7 days"
-                : "አዳዲስ ማመልከቻዎች ባለፉት 7 ቀናት"}
+                : lang === "am"
+                  ? "አዳዲስ ማመልከቻዎች ባለፉት 7 ቀናት"
+                  : "iyyannoolee haaraa guyyoota 7n darban keessatti"}
             </span>
           </div>
         </CardContent>
@@ -201,7 +203,9 @@ export function AdminDashboard() {
             <CardTitle className="text-base">
               {lang === "en"
                 ? "Applications — last 7 days"
-                : "ማመልከቻዎች — ያለፉት 7 ቀናት"}
+                : lang === "am"
+                  ? "ማመልከቻዎች — ያለፉት 7 ቀናት"
+                  : "Iyyannoolee — guyyoota 7n darban"}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -238,7 +242,9 @@ export function AdminDashboard() {
             <CardTitle className="text-base">
               {lang === "en"
                 ? "Status distribution"
-                : "የሁኔታ ስርጭት"}
+                : lang === "am"
+                  ? "የሁኔታ ስርጭት"
+                  : "Raabsama Haalaa"}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -284,7 +290,9 @@ export function AdminDashboard() {
           <CardTitle className="text-base">
             {lang === "en"
               ? "Top categories by application count"
-              : "በማመልከቻ ብዛት ከፍተኛ ምድቦች"}
+              : lang === "am"
+                ? "በማመልከቻ ብዛት ከፍተኛ ምድቦች"
+                : "Ramaddiiwwan baay'ina iyyannootiin olaanoo ta'an"}
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -330,7 +338,7 @@ export function AdminDashboard() {
         <CardHeader>
           <CardTitle className="text-base flex items-center gap-2">
             <FileText className="h-4 w-4 text-primary" aria-hidden />
-            {lang === "en" ? "Quick stats" : "ፈጣን ስታቲስቲክስ"}
+            {lang === "en" ? "Quick stats" : lang === "am" ? "ፈጣን ስታቲስቲክስ" : "Istaatistiksii Saffisaa"}
           </CardTitle>
         </CardHeader>
         <CardContent>

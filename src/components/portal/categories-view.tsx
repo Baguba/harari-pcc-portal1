@@ -116,7 +116,7 @@ export function CategoriesView() {
                 <SelectItem value="all">{t("cat.filter.all", lang)}</SelectItem>
                 {activityGroups.map((g) => (
                   <SelectItem key={g.key} value={g.key}>
-                    {lang === "en" ? g.label_en : g.label_am}
+                    {g[`label_${lang}` as keyof typeof g] || g.label_en}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -133,7 +133,7 @@ export function CategoriesView() {
               }}
               className="ml-2 text-primary hover:underline"
             >
-              {lang === "en" ? "Clear filters" : "ማጣሪያዎችን አጽዳ"}
+              {lang === "en" ? "Clear filters" : lang === "am" ? "ማጣሪያዎችን አጽዳ" : "Calaltuu qulqulleessi"}
             </button>
           )}
         </div>
@@ -152,12 +152,12 @@ export function CategoriesView() {
           {grouped.map(([key, items]) => {
             const g = activityGroups.find((x) => x.key === key);
             const label = g
-              ? lang === "en"
-                ? g.label_en
-                : g.label_am
+              ? g[`label_${lang}` as keyof typeof g] || g.label_en
               : lang === "en"
                 ? "Other"
-                : "ሌሎች";
+                : lang === "am"
+                  ? "ሌሎች"
+                  : "Kanneen Biroo";
             return (
               <section key={key} aria-label={label}>
                 <div className="flex items-center gap-2 mb-3">
@@ -232,7 +232,7 @@ export function CategoriesView() {
                             {c.title_am}
                           </p>
                           <div className="mt-3 flex items-center text-xs text-primary font-medium">
-                            {lang === "en" ? "View requirements" : "መስፈርቶችን ይዩ"}
+                            {lang === "en" ? "View requirements" : lang === "am" ? "መስፈርቶችን ይዩ" : "Ulaagaalee ilaali"}
                             <ArrowRight className="h-3 w-3 ml-1" aria-hidden />
                           </div>
                         </CardContent>

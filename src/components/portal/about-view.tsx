@@ -167,7 +167,9 @@ export function AboutView() {
         <div className="text-sm text-accent-foreground/90 leading-relaxed">
           {lang === "en"
             ? "This portal is a compliance and convenience tool. The authoritative legal text remains the official directive published by PCC. In case of any discrepancy, the official directive prevails."
-            : "ይህ ፖርታል የመግዛት እና የምቾት መሣሪያ ነው። ህጋዊ የሆነ ጽሑፍ የPCC በሚያወጣው ይፋዊ መመሪያ ላይ ይገኛል። ማንኛውም ልዩነት በሚከሰትበት ጊዜ ይፋዊው መመሪያ ይከበራል።"}
+            : lang === "am"
+              ? "ይህ ፖርታል የመግዛት እና የምቾት መሣሪያ ነው። ህጋዊ የሆነ ጽሑፍ የPCC በሚያወጣው ይፋዊ መመሪያ ላይ ይገኛል። ማንኛውም ልዩነት በሚከሰትበት ጊዜ ይፋዊው መመሪያ ይከበራል።"
+              : "Portaali kun meeshaa hordoffii seera eeguu fi salphinaati. Barreeffamni seeraa angessaan qajeelfama iffaa PCC'n maxxanfamedha. Garaagarummaan yoo uumame, qajeelfama iffaatu fudhatama qaba."}
         </div>
       </div>
     </div>

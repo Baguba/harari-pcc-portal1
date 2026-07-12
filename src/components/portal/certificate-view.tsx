@@ -196,11 +196,11 @@ export function CertificateView({
       <div className="flex justify-end gap-2 mb-3 no-print">
         <Button variant="outline" size="sm" className="gap-1.5" onClick={handlePrint}>
           <Printer className="h-3.5 w-3.5" aria-hidden />
-          {lang === "en" ? "Print" : "አትም"}
+          {lang === "en" ? "Print" : lang === "am" ? "አትም" : "Maxxansi"}
         </Button>
         <Button variant="outline" size="sm" className="gap-1.5" onClick={handlePrint}>
           <Download className="h-3.5 w-3.5" aria-hidden />
-          {lang === "en" ? "Download PDF" : "PDF አውርድ"}
+          {lang === "en" ? "Download PDF" : lang === "am" ? "PDF አውርድ" : "PDF Buusi"}
         </Button>
       </div>
 
@@ -235,12 +235,16 @@ export function CertificateView({
                   <p className="cert-country">
                     {lang === "en"
                       ? "Harari Regional State of Ethiopia"
-                      : "የሐረሪ ሕዝብ ብሔራዊ ክልላዊ መንግሥት"}
+                      : lang === "am"
+                        ? "የሐረሪ ሕዝብ ብሔራዊ ክልላዊ መንግሥት"
+                        : "Mootummaa Naannoo Hararii Itoophiyaa"}
                   </p>
                   <p className="cert-ministry">
                     {lang === "en"
                       ? "Innovation and Technology Agency"
-                      : "የኮሙኒኬሽንና ኢንፎርሜሽን ቴክኖሎጂ ሚኒስቴር"}
+                      : lang === "am"
+                        ? "የኮሙኒኬሽንና ኢንፎርሜሽን ቴክኖሎጂ ሚኒስቴር"
+                        : "Eejansii Inoviishinii fi Teknolojii"}
                   </p>
                 </div>
               </div>
@@ -256,7 +260,9 @@ export function CertificateView({
               <h2 className="cert-title">
                 {lang === "en"
                   ? "Professional Competence Certificate"
-                  : "የሙያ ብቃት ሰርቲፊኬት"}
+                  : lang === "am"
+                    ? "የሙያ ብቃት ሰርቲፊኬት"
+                    : "Waraqaa Ragaa Dandeettii Ogummaa"}
               </h2>
               <p className="cert-subtitle">
                 {directive.directive_number}
@@ -270,7 +276,9 @@ export function CertificateView({
                 <p className="cert-preamble">
                   {lang === "en"
                     ? "This is to certify that"
-                    : "ይህ የሚረጋግጠው"}
+                    : lang === "am"
+                      ? "ይህ የሚረጋግጠው"
+                      : "Kuni kan mirkaneessu"}
                 </p>
 
                 <p className="cert-holder-name">{holderName}</p>
@@ -278,7 +286,9 @@ export function CertificateView({
                 <p className="cert-description">
                   {lang === "en"
                     ? `has fulfilled the professional competence requirements and is hereby granted authorization to operate in the following business field under the Communication and Information Technology sector:`
-                    : `የሙያ ብቃት መስፈርቶችን በማሟላት በኮሙኒኬሽንና ኢንፎርሜሽን ቴክኖሎጂ ዘርፍ በሚከተለው የንግድ ስራ መስክ ለመስራት ፈቃድ ተሰጥቶታል/ታለች:`}
+                    : lang === "am"
+                      ? `የሙያ ብቃት መስፈርቶችን በማሟላት በኮሙኒኬሽንና ኢንፎርሜሽን ቴክኖሎጂ ዘርፍ በሚከተለው የንግድ ስራ መስክ ለመስራት ፈቃድ ተሰጥቶታል/ታለች:`
+                      : `ulaagaalee dandeettii ogummaa guutee jiruuf sektara Komunikeeshinii fi Teknolojii Odeeffannoo jalatti hojii daldalaa armaan gadii irratti akka bobba'uuf eeyyamni kennameefii jira:`}
                 </p>
 
                 <div className="cert-category-box">
@@ -291,7 +301,7 @@ export function CertificateView({
               <div className="cert-dates">
                 <div className="cert-date-item">
                   <span className="cert-date-label">
-                    {lang === "en" ? "Date of Issue" : "የተሰጠበት ቀን"}
+                    {lang === "en" ? "Date of Issue" : lang === "am" ? "የተሰጠበት ቀን" : "Guyyaa Kenname"}
                   </span>
                   <span className="cert-date-value">
                     {issued ? formatDate(issued) : "—"}
@@ -299,7 +309,7 @@ export function CertificateView({
                 </div>
                 <div className="cert-date-item">
                   <span className="cert-date-label">
-                    {lang === "en" ? "Valid Until" : "የሚያበቃበት ቀን"}
+                    {lang === "en" ? "Valid Until" : lang === "am" ? "የሚያበቃበት ቀን" : "Hanga Guyyaa"}
                   </span>
                   <span className="cert-date-value">
                     {validUntil ? formatDate(validUntil) : "—"}
@@ -307,7 +317,7 @@ export function CertificateView({
                 </div>
                 <div className="cert-date-item">
                   <span className="cert-date-label">
-                    {lang === "en" ? "Certificate No." : "ሰርቲፊኬት ቁጥር"}
+                    {lang === "en" ? "Certificate No." : lang === "am" ? "ሰርቲፊኬት ቁጥር" : "Lakk. Waraqaa Ragaa"}
                   </span>
                   <span className="cert-date-value cert-ref-id">
                     {applicationId.slice(0, 16).toUpperCase()}
@@ -320,16 +330,16 @@ export function CertificateView({
                 <div className="cert-sig-block">
                   <div className="cert-sig-line" />
                   <p className="cert-sig-title">
-                    {lang === "en" ? "Authorized Signatory" : "ሥልጣን የተሰጠው ፈራሚ"}
+                    {lang === "en" ? "Authorized Signatory" : lang === "am" ? "ሥልጣን የተሰጠው ፈራሚ" : "Mallattoo Eeyyamame"}
                   </p>
                   <p className="cert-sig-name">
-                    {lang === "en" ? "Director, Licensing Division" : "ዳይሬክተር፣ ፈቃድ ክፍል"}
+                    {lang === "en" ? "Director, Licensing Division" : lang === "am" ? "ዳይሬክተር፣ ፈቃድ ክፍል" : "Daayirektara, Damee Hayyamaa"}
                   </p>
                 </div>
                 <div className="cert-sig-block">
                   <div className="cert-sig-line" />
                   <p className="cert-sig-title">
-                    {lang === "en" ? "Minister / Authorized Official" : "ሚኒስቴር / ሥልጣን ያለው ባለሥልጣን"}
+                    {lang === "en" ? "Minister / Authorized Official" : lang === "am" ? "ሚኒስቴር / ሥልጣን ያለው ባለሥልጣን" : "Ministeera / Abbaa Taayitaa Eeyyamame"}
                   </p>
                   <p className="cert-sig-name">PCC</p>
                 </div>
@@ -345,7 +355,9 @@ export function CertificateView({
                   <span>
                     {lang === "en"
                       ? "This certificate is issued pursuant to Proclamation No. 686/2002, Article 30(3). Valid for one year from date of issue."
-                      : "ይህ ሰርቲፊኬት በአዋጅ ቁጥር 686/2002 አንቀጽ 30(3) መሠረት የተሰጠ ነው። ከተሰጠበት ቀን ጀምሮ ለአንድ ዓመት ተፈጻሚ ይሆናል።"}
+                      : lang === "am"
+                        ? "ይህ ሰርቲፊኬት በአዋጅ ቁጥር 686/2002 አንቀጽ 30(3) መሠረት የተሰጠ ነው። ከተሰጠበት ቀን ጀምሮ ለአንድ ዓመት ተፈጻሚ ይሆናል።"
+                        : "Waraqaan ragaa kun Labsa Lakk. 686/2002, Keewwata 30(3) bu'uura godhachuun kan kennamedha. Guyyaa kennamee kaasee waggaa tokkof kan hojjetudha."}
                   </span>
                 </div>
               </div>
