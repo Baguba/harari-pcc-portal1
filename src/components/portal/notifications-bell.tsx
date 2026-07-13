@@ -23,6 +23,7 @@ interface NotificationItem {
   read: boolean;
   createdAt: string;
   link?: string | null;
+  applicationId?: string | null;
 }
 
 export function NotificationsBell() {
@@ -92,13 +93,25 @@ export function NotificationsBell() {
       setItems((prev) =>
         prev.map((x) => (x.id === n.id ? { ...x, read: true } : x))
       );
-      setUnreadCount((c) => Math.max(0, c - 1));
+      setUnreadCount(Math.max(0, unreadCount - 1));
     }
     setOpen(false);
-    if (n.link?.startsWith("admin/")) {
-      setView({ name: "admin" });
-    } else if (n.link === "news") {
-      setView({ name: "news" });
+    if (session?.role === "applicant") {
+      const isAppNotification = n.applicationId || n.link?.startsWith("admin/application/");
+      const appId = n.applicationId || (n.link?.startsWith("admin/application/") ? n.link.split("/").pop() : null);
+      if (isAppNotification && appId) {
+        setView({ name: "applicant-application", id: appId });
+      } else if (n.link === "news") {
+        setView({ name: "news" });
+      } else {
+        setView({ name: "applicant-dashboard" });
+      }
+    } else {
+      if (n.link?.startsWith("admin/")) {
+        setView({ name: "admin" });
+      } else if (n.link === "news") {
+        setView({ name: "news" });
+      }
     }
   };
 
