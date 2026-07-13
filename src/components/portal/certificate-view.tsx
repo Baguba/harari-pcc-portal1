@@ -12,6 +12,8 @@ interface CertificateProps {
   issuedDate: string | null;
   applicationId: string;
   lang: "en" | "am";
+  stampUrl?: string | null;
+  signatureUrl?: string | null;
 }
 
 /* ------------------------------------------------------------------ */
@@ -171,6 +173,8 @@ export function CertificateView({
   issuedDate,
   applicationId,
   lang,
+  stampUrl,
+  signatureUrl,
 }: CertificateProps) {
   const certRef = useRef<HTMLDivElement>(null);
 
@@ -327,8 +331,15 @@ export function CertificateView({
 
               {/* Signature section */}
               <div className="cert-signatures">
-                <div className="cert-sig-block">
-                  <div className="cert-sig-line" />
+                <div className="cert-sig-block relative flex flex-col items-center">
+                  {signatureUrl && (
+                    <img
+                      src={signatureUrl}
+                      alt="Signature"
+                      className="absolute -top-12 h-14 object-contain pointer-events-none"
+                    />
+                  )}
+                  <div className="cert-sig-line w-full" />
                   <p className="cert-sig-title">
                     {lang === "en" ? "Authorized Signatory" : lang === "am" ? "ሥልጣን የተሰጠው ፈራሚ" : "Mallattoo Eeyyamame"}
                   </p>
@@ -336,8 +347,15 @@ export function CertificateView({
                     {lang === "en" ? "Director, Licensing Division" : lang === "am" ? "ዳይሬክተር፣ ፈቃድ ክፍል" : "Daayirektara, Damee Hayyamaa"}
                   </p>
                 </div>
-                <div className="cert-sig-block">
-                  <div className="cert-sig-line" />
+                <div className="cert-sig-block relative flex flex-col items-center">
+                  {stampUrl && (
+                    <img
+                      src={stampUrl}
+                      alt="Official Stamp"
+                      className="absolute -top-14 h-20 w-20 object-contain opacity-85 pointer-events-none mix-blend-multiply"
+                    />
+                  )}
+                  <div className="cert-sig-line w-full" />
                   <p className="cert-sig-title">
                     {lang === "en" ? "Minister / Authorized Official" : lang === "am" ? "ሚኒስቴር / ሥልጣን ያለው ባለሥልጣን" : "Ministeera / Abbaa Taayitaa Eeyyamame"}
                   </p>

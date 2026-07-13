@@ -36,6 +36,7 @@ interface Metrics {
     submitted: number;
     underReview: number;
     approved: number;
+    reviewed: number;
     rejected: number;
     recent: number;
   };
@@ -48,6 +49,7 @@ const STATUS_COLORS: Record<string, string> = {
   submitted: "#1F4E8C",      // royal blue
   under_review: "#C89B3C",   // gold
   approved: "#0F6B4A",        // emerald
+  reviewed: "#2563EB",          // blue
   rejected: "#B91C1C",        // red
   revoked: "#525252",         // gray
 };
@@ -56,6 +58,7 @@ const STATUS_LABEL: Record<string, string> = {
   submitted: "Submitted",
   under_review: "Under Review",
   approved: "Approved",
+  reviewed: "Reviewed",
   rejected: "Rejected",
   revoked: "Revoked",
 };
@@ -128,6 +131,13 @@ export function AdminDashboard() {
       bg: "bg-primary/10",
     },
     {
+      label: "Reviewed",
+      value: totals.reviewed,
+      icon: CheckCircle2,
+      color: "text-blue-600",
+      bg: "bg-blue-500/10",
+    },
+    {
       label: "Rejected",
       value: totals.rejected,
       icon: XCircle,
@@ -159,7 +169,7 @@ export function AdminDashboard() {
   return (
     <div className="space-y-6">
       {/* Stat cards */}
-      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
         {statCards.map((s, i) => {
           const Icon = s.icon;
           return (
@@ -345,6 +355,7 @@ export function AdminDashboard() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
             <StatTile label="Submitted" value={totals.submitted} color="border-secondary/30 bg-secondary/5" />
             <StatTile label="Under review" value={totals.underReview} color="border-accent/30 bg-accent/5" />
+            <StatTile label="Reviewed" value={totals.reviewed} color="border-blue-500/30 bg-blue-500/5" />
             <StatTile label="Approved" value={totals.approved} color="border-primary/30 bg-primary/5" />
             <StatTile label="Rejected" value={totals.rejected} color="border-destructive/30 bg-destructive/5" />
           </div>

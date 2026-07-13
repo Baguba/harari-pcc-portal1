@@ -24,8 +24,9 @@ import { AdminApplications } from "./admin-applications";
 import { AdminNews } from "./admin-news";
 import { AdminUsers } from "./admin-users";
 import { AdminAudit } from "./admin-audit";
+import { AdminProfile } from "./admin-profile";
 
-type Tab = "dashboard" | "applications" | "news" | "users" | "audit";
+type Tab = "dashboard" | "applications" | "news" | "users" | "profile" | "audit";
 
 export function AdminView() {
   const lang = useApp((s) => s.lang);
@@ -71,7 +72,10 @@ export function AdminView() {
     { key: "applications", label: t("admin.applications", lang), icon: FileText },
     { key: "news", label: t("admin.news", lang), icon: Newspaper },
     ...(isSuperAdmin
-      ? [{ key: "users" as Tab, label: t("admin.users", lang), icon: Users }]
+      ? [
+          { key: "users" as Tab, label: t("admin.users", lang), icon: Users },
+          { key: "profile" as Tab, label: t("admin.profile", lang), icon: ShieldCheck },
+        ]
       : []),
     { key: "audit", label: t("admin.audit", lang), icon: History },
   ];
@@ -173,6 +177,9 @@ export function AdminView() {
         {tab === "news" && <AdminNews key={`news-${refreshKey}`} />}
         {tab === "users" && isSuperAdmin && (
           <AdminUsers key={`users-${refreshKey}`} />
+        )}
+        {tab === "profile" && isSuperAdmin && (
+          <AdminProfile key={`profile-${refreshKey}`} />
         )}
         {tab === "audit" && <AdminAudit key={`audit-${refreshKey}`} />}
       </div>

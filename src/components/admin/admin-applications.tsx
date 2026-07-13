@@ -72,6 +72,7 @@ interface Application {
 const STATUS_BADGE: Record<string, { label: string; cls: string }> = {
   submitted: { label: "Submitted", cls: "bg-secondary/15 text-secondary-foreground border-secondary/30" },
   under_review: { label: "Under Review", cls: "bg-accent/20 text-accent-foreground border-accent/30" },
+  reviewed: { label: "Reviewed", cls: "bg-blue-500/15 text-blue-600 border-blue-500/30" },
   approved: { label: "Approved", cls: "bg-primary/15 text-primary border-primary/30" },
   rejected: { label: "Rejected", cls: "bg-destructive/15 text-destructive border-destructive/30" },
   revoked: { label: "Revoked", cls: "bg-muted text-muted-foreground border-border" },
@@ -79,6 +80,8 @@ const STATUS_BADGE: Record<string, { label: string; cls: string }> = {
 
 export function AdminApplications() {
   const lang = useApp((s) => s.lang);
+  const session = useApp((s) => s.session);
+  const isSuperAdmin = session?.role === "super_admin";
   const authedFetch = useAuthedFetch();
   const [apps, setApps] = useState<Application[]>([]);
   const [loading, setLoading] = useState(true);
@@ -132,6 +135,10 @@ export function AdminApplications() {
 
   const handleUpdate = async () => {
     if (!selected) return;
+    if (newStatus === "approved" && selected.status !== "approved") {
+      const ok = window.confirm("Are you sure you want to approve this application? Once approved, the approval cannot be removed.");
+      if (!ok) return;
+    }
     setUpdating(true);
     try {
       const res = await authedFetch(`/api/applications/${selected.id}`, {
@@ -205,6 +212,7 @@ export function AdminApplications() {
             <SelectItem value="all">All statuses</SelectItem>
             <SelectItem value="submitted">Submitted</SelectItem>
             <SelectItem value="under_review">Under Review</SelectItem>
+            <SelectItem value="reviewed">Reviewed</SelectItem>
             <SelectItem value="approved">Approved</SelectItem>
             <SelectItem value="rejected">Rejected</SelectItem>
             <SelectItem value="revoked">Revoked</SelectItem>
@@ -417,16 +425,21 @@ export function AdminApplications() {
                   <CardContent className="space-y-3">
                     <div>
                       <Label className="text-xs">Set status</Label>
-                      <Select value={newStatus} onValueChange={setNewStatus}>
+                      <Select value={newStatus} onValueChange={setNewStatus} disabled={selected.status === "approved"}>
                         <SelectTrigger className="mt-1.5">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
                           <SelectItem value="submitted">Submitted</SelectItem>
                           <SelectItem value="under_review">Under Review</SelectItem>
-                          <SelectItem value="approved">Approved</SelectItem>
-                          <SelectItem value="rejected">Rejected</SelectItem>
-                          <SelectItem value="revoked">Revoked</SelectItem>
+                          <SelectItem value="reviewed">Reviewed</SelectItem>
+                          {isSuperAdmin && (
+                            <>
+                              <SelectItem value="approved">Approved</SelectItem>
+                              <SelectItem value="rejected">Rejected</SelectItem>
+                              <SelectItem value="revoked">Revoked</SelectItem>
+                            </>
+                          )}
                         </SelectContent>
                       </Select>
                     </div>
@@ -449,37 +462,62 @@ export function AdminApplications() {
                   Cancel
                 </Button>
                 <div className="flex-1" />
-                {newStatus !== "approved" && (
-                  <Button
-                    variant="outline"
-                    onClick={() => setNewStatus("approved")}
-                    className="gap-1.5 text-primary border-primary/30 hover:bg-primary/5"
-                  >
-                    <CheckCircle2 className="h-4 w-4" aria-hidden />
-                    Approve
-                  </Button>
+                {selected.status !== "approved" && (
+                  <>
+                    {isSuperAdmin ? (
+                      <>
+                        {newStatus !== "approved" && (
+                          <Button
+                            variant="outline"
+                            onClick={() => setNewStatus("approved")}
+                            className="gap-1.5 text-primary border-primary/30 hover:bg-primary/5"
+                          >
+                            <CheckCircle2 className="h-4 w-4" aria-hidden />
+                            Approve
+                          </Button>
+                        )}
+                        {newStatus !== "rejected" && (
+                          <Button
+                            variant="outline"
+                            onClick={() => setNewStatus("rejected")}
+                            className="gap-1.5 text-destructive border-destructive/30 hover:bg-destructive/5"
+                          >
+                            <XCircle className="h-4 w-4" aria-hidden />
+                            Reject
+                          </Button>
+                        )}
+                      </>
+                    ) : (
+                      <>
+                        {newStatus !== "reviewed" && (
+                          <Button
+                            variant="outline"
+                            onClick={() => setNewStatus("reviewed")}
+                            className="gap-1.5 text-blue-600 border-blue-500/30 hover:bg-blue-500/5"
+                          >
+                            <CheckCircle2 className="h-4 w-4" aria-hidden />
+                            Mark Reviewed
+                          </Button>
+                        )}
+                      </>
+                    )}
+                    {newStatus !== "under_review" && (
+                      <Button
+                        variant="outline"
+                        onClick={() => setNewStatus("under_review")}
+                        className="gap-1.5"
+                      >
+                        <Clock className="h-4 w-4" aria-hidden />
+                        Under review
+                      </Button>
+                    )}
+                  </>
                 )}
-                {newStatus !== "rejected" && (
-                  <Button
-                    variant="outline"
-                    onClick={() => setNewStatus("rejected")}
-                    className="gap-1.5 text-destructive border-destructive/30 hover:bg-destructive/5"
-                  >
-                    <XCircle className="h-4 w-4" aria-hidden />
-                    Reject
-                  </Button>
-                )}
-                {newStatus !== "under_review" && (
-                  <Button
-                    variant="outline"
-                    onClick={() => setNewStatus("under_review")}
-                    className="gap-1.5"
-                  >
-                    <Clock className="h-4 w-4" aria-hidden />
-                    Under review
-                  </Button>
-                )}
-                <Button onClick={handleUpdate} disabled={updating} className="gap-1.5">
+                <Button 
+                  onClick={handleUpdate} 
+                  disabled={updating || (selected.status === "approved" && reviewNote === selected.reviewNote)} 
+                  className="gap-1.5"
+                >
                   {updating ? (
                     <Loader2 className="h-4 w-4 animate-spin" aria-hidden />
                   ) : (

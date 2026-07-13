@@ -25,6 +25,7 @@ export async function GET(req: NextRequest) {
     submitted,
     underReview,
     approved,
+    reviewed,
     rejected,
     recent,
     byCategory,
@@ -34,6 +35,7 @@ export async function GET(req: NextRequest) {
     db.application.count({ where: { status: "submitted" } }),
     db.application.count({ where: { status: "under_review" } }),
     db.application.count({ where: { status: "approved" } }),
+    db.application.count({ where: { status: "reviewed" } }),
     db.application.count({ where: { status: "rejected" } }),
     db.application.count({
       where: { createdAt: { gte: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000) } },
@@ -78,6 +80,7 @@ export async function GET(req: NextRequest) {
       submitted,
       underReview,
       approved,
+      reviewed,
       rejected,
       recent,
     },

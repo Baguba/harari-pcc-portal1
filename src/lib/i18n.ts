@@ -71,6 +71,7 @@ const strings: StringMap = {
   "applicant.application.submitted": { en: "Submitted", am: "ቀርቧል", om: "Galchamee jira" },
   "applicant.application.under_review": { en: "Under review", am: "በግምገማ ላይ", om: "Gamaaggama irra" },
   "applicant.application.approved": { en: "Approved", am: "ጸድቋል", om: "Mirkanaa'ee jira" },
+  "applicant.application.reviewed": { en: "Reviewed", am: "ታይቷል", om: "Ilaalamee jira" },
   "applicant.application.rejected": { en: "Rejected", am: "ተቋርጧል", om: "Diddamee jira" },
   "applicant.application.revoked": { en: "Revoked", am: "ተሰርዟል", om: "Haqamee jira" },
   "applicant.application.certificate": {
@@ -294,6 +295,7 @@ const strings: StringMap = {
   "admin.news": { en: "News & Announcements", am: "ዜና እና ማስታወቂያዎች", om: "Oduu fi Beeksisa" },
   "admin.users": { en: "Users & Admins", am: "ተጠቃሚዎች እና አስተዳዳሪዎች", om: "Fayyadamtoota fi Bulchitoota" },
   "admin.audit": { en: "Audit log", am: "የግምገማ ምዝገባ", om: "Galmee odiitii" },
+  "admin.profile": { en: "Profile", am: "መገለጫ", om: "Ibsa" },
 
   // Common
   "common.back": { en: "Back", am: "ተመለስ", om: "Duubatti" },

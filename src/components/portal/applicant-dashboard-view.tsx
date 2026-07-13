@@ -57,6 +57,11 @@ const STATUS_META: Record<
     cls: "bg-accent/20 text-accent-foreground border-accent/30",
     icon: Clock,
   },
+  reviewed: {
+    label: "Reviewed",
+    cls: "bg-blue-500/15 text-blue-600 border-blue-500/30",
+    icon: CheckCircle2,
+  },
   approved: {
     label: "Approved",
     cls: "bg-primary/15 text-primary border-primary/30",
@@ -117,6 +122,7 @@ export function ApplicantDashboardView() {
   const counts = {
     total: apps.length,
     pending: apps.filter((a) => a.status === "submitted" || a.status === "under_review").length,
+    reviewed: apps.filter((a) => a.status === "reviewed").length,
     approved: apps.filter((a) => a.status === "approved").length,
     rejected: apps.filter((a) => a.status === "rejected" || a.status === "revoked").length,
   };
@@ -124,6 +130,7 @@ export function ApplicantDashboardView() {
   const statCards = [
     { label: "Total", value: counts.total, icon: Inbox, color: "text-secondary", bg: "bg-secondary/10" },
     { label: "Pending", value: counts.pending, icon: Clock, color: "text-accent-foreground", bg: "bg-accent/15" },
+    { label: "Reviewed", value: counts.reviewed, icon: CheckCircle2, color: "text-blue-600", bg: "bg-blue-500/10" },
     { label: "Approved", value: counts.approved, icon: CheckCircle2, color: "text-primary", bg: "bg-primary/10" },
     { label: "Rejected", value: counts.rejected, icon: XCircle, color: "text-destructive", bg: "bg-destructive/10" },
   ];

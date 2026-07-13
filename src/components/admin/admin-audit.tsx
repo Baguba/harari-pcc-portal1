@@ -23,6 +23,7 @@ const actionColor: Record<string, string> = {
   "auth.login": "bg-secondary/10 text-secondary-foreground border-secondary/30",
   "application.submit": "bg-secondary/10 text-secondary-foreground border-secondary/30",
   "application.approved": "bg-primary/10 text-primary border-primary/30",
+  "application.reviewed": "bg-blue-500/10 text-blue-600 border-blue-500/30",
   "application.rejected": "bg-destructive/10 text-destructive border-destructive/30",
   "application.under_review": "bg-accent/15 text-accent-foreground border-accent/30",
   "application.submitted": "bg-secondary/10 text-secondary-foreground border-secondary/30",

@@ -47,6 +47,26 @@ export async function PATCH(
   const newStatus = body.status || existing.status;
   const reviewNote = body.reviewNote !== undefined ? body.reviewNote : existing.reviewNote;
 
+  // Once approved, status cannot be changed or removed
+  if (existing.status === "approved" && newStatus !== "approved") {
+    return NextResponse.json(
+      { error: "Once approved, an application's status cannot be changed or removed." },
+      { status: 400 }
+    );
+  }
+
+
+  // Role-based status restrictions:
+  // Regular admins can only set: submitted, under_review, reviewed
+  // Super admins can set any status including: approved, rejected, revoked
+  const adminOnlyStatuses = ["submitted", "under_review", "reviewed"];
+  if (admin.role === "admin" && !adminOnlyStatuses.includes(newStatus)) {
+    return NextResponse.json(
+      { error: "Only super administrators can approve, reject, or revoke applications." },
+      { status: 403 }
+    );
+  }
+
   const updated = await db.application.update({
     where: { id },
     data: {
@@ -67,7 +87,7 @@ export async function PATCH(
         userId: linkedUser.id,
         title: `Application ${newStatus}`,
         body: `Your application for ${existing.categoryTitle} is now: ${newStatus}.`,
-        type: newStatus === "approved" ? "success" : newStatus === "rejected" ? "warning" : "info",
+        type: newStatus === "approved" ? "success" : newStatus === "rejected" ? "warning" : newStatus === "reviewed" ? "info" : "info",
         link: `admin/application/${id}`,
         applicationId: id,
       },

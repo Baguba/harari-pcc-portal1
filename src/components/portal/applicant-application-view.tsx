@@ -1,6 +1,7 @@
 "use client";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import {
   ArrowLeft,
   CheckCircle2,
@@ -24,6 +25,7 @@ import { t } from "@/lib/i18n";
 import { directive } from "@/lib/data";
 import { woredas } from "@/lib/types";
 import { CertificateView } from "./certificate-view";
+import { useAuthedFetch } from "./use-authed-fetch";
 
 interface MyApp {
   id: string;
@@ -62,6 +64,11 @@ const STATUS_META: Record<
     cls: "bg-accent/20 text-accent-foreground border-accent/30",
     icon: Clock,
   },
+  reviewed: {
+    label: "Reviewed",
+    cls: "bg-blue-500/15 text-blue-600 border-blue-500/30",
+    icon: CheckCircle2,
+  },
   approved: {
     label: "Approved",
     cls: "bg-primary/15 text-primary border-primary/30",
@@ -83,8 +90,11 @@ export function ApplicantApplicationView({ id }: { id: string }) {
   const lang = useApp((s) => s.lang);
   const session = useApp((s) => s.session);
   const setView = useApp((s) => s.setView);
+  const authedFetch = useAuthedFetch();
   const [app, setApp] = useState<MyApp | null>(null);
   const [loading, setLoading] = useState(true);
+  const [stampUrl, setStampUrl] = useState<string | null>(null);
+  const [signatureUrl, setSignatureUrl] = useState<string | null>(null);
 
   useEffect(() => {
     if (!session) {
@@ -119,6 +129,26 @@ export function ApplicantApplicationView({ id }: { id: string }) {
     };
   }, [id, session, setView]);
 
+  // Fetch super admin stamp and signature for certificate display
+  const fetchProfile = useCallback(async () => {
+    try {
+      const res = await authedFetch("/api/profile");
+      if (res.ok) {
+        const data = await res.json();
+        setStampUrl(data.stampUrl);
+        setSignatureUrl(data.signatureUrl);
+      }
+    } catch {
+      /* ignore */
+    }
+  }, [authedFetch]);
+
+  useEffect(() => {
+    if (app?.status === "approved") {
+      fetchProfile();
+    }
+  }, [app?.status, fetchProfile]);
+
   if (loading || !app) {
     return (
       <div className="container mx-auto max-w-3xl px-4 py-20 text-center">
@@ -131,7 +161,10 @@ export function ApplicantApplicationView({ id }: { id: string }) {
   const StatusIcon = meta.icon;
   const isApproved = app.status === "approved";
 
-  // Timeline steps
+  const pastReview = app.status === "reviewed" || app.status === "approved" || app.status === "rejected" || app.status === "revoked";
+  const pastUnderReview = app.status === "under_review" || pastReview;
+
+  // Timeline steps (4-step: submitted → under review → reviewed → final decision)
   const timeline = [
     {
       key: "submitted",
@@ -142,18 +175,14 @@ export function ApplicantApplicationView({ id }: { id: string }) {
     {
       key: "under_review",
       label: t("applicant.application.under_review", lang),
-      date:
-        app.status === "under_review" ||
-        app.status === "approved" ||
-        app.status === "rejected" ||
-        app.status === "revoked"
-          ? app.reviewedAt || app.createdAt
-          : null,
-      done:
-        app.status === "under_review" ||
-        app.status === "approved" ||
-        app.status === "rejected" ||
-        app.status === "revoked",
+      date: pastUnderReview ? app.reviewedAt || app.createdAt : null,
+      done: pastUnderReview,
+    },
+    {
+      key: "reviewed",
+      label: t("applicant.application.reviewed", lang),
+      date: pastReview ? app.reviewedAt : null,
+      done: pastReview,
     },
     {
       key: "final",
@@ -165,7 +194,7 @@ export function ApplicantApplicationView({ id }: { id: string }) {
             : app.status === "revoked"
               ? t("applicant.application.revoked", lang)
               : t("applicant.application.approved", lang),
-      date: app.reviewedAt,
+      date: isApproved || app.status === "rejected" || app.status === "revoked" ? app.reviewedAt : null,
       done: isApproved || app.status === "rejected" || app.status === "revoked",
       final: true,
       variant: app.status === "approved" ? "success" : app.status === "rejected" || app.status === "revoked" ? "danger" : "default",
@@ -209,6 +238,8 @@ export function ApplicantApplicationView({ id }: { id: string }) {
           issuedDate={app.reviewedAt}
           applicationId={app.id}
           lang={lang}
+          stampUrl={stampUrl}
+          signatureUrl={signatureUrl}
         />
       )}
 
