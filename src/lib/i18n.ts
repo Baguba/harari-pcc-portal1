@@ -30,7 +30,7 @@ const strings: StringMap = {
 
   // Applicant account
   "nav.applicant": { en: "My Account", am: "መለያዬ", om: "Herrega Koo" },
-  "nav.signup": { en: "Sign up", am: "ተመዝገብ", om: "Galmaa'i" },
+  "nav.signup": { en: "Register", am: "ተመዝገብ", om: "Galmaa'i" },
   "applicant.login.title": { en: "Applicant sign in", am: "የአመልካች መግቢያ", om: "Seensa iyyataa" },
   "applicant.login.subtitle": {
     en: "Track your applications, see review feedback, and download your certificate when issued.",
@@ -39,7 +39,7 @@ const strings: StringMap = {
   },
   "applicant.signup.title": { en: "Create an applicant account", am: "የአመልካች መለያ ይፍጠሩ", om: "Herrega iyyataa uumi" },
   "applicant.signup.subtitle": {
-    en: "Sign up to submit and track your Professional Competence Certificate applications.",
+    en: "Register to submit and track your Professional Competence Certificate applications.",
     am: "የሙያ ብቃት ሰርቲፊኬት ማመልከቻዎችን ለማስገባት እና ለመከታተል ይመዝገቡ።",
     om: "Iyyannoo Waraqaa Ragaa Dandeettii Ogummaa galchuuf fi hordofuuf galmaa'i.",
   },

@@ -121,7 +121,7 @@ export function ApplyView({ code, num }: Props) {
   if (!session) {
     return (
       <div className="container mx-auto max-w-3xl px-4 py-20 text-center text-muted-foreground">
-        Redirecting to sign up...
+        Redirecting to register...
       </div>
     );
   }
