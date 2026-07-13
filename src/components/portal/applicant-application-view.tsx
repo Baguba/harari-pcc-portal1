@@ -22,6 +22,7 @@ import { Badge } from "@/components/ui/badge";
 import { useApp } from "@/lib/store";
 import { t } from "@/lib/i18n";
 import { directive } from "@/lib/data";
+import { woredas } from "@/lib/types";
 import { CertificateView } from "./certificate-view";
 
 interface MyApp {
