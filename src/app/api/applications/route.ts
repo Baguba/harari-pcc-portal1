@@ -27,7 +27,29 @@ export async function GET(req: NextRequest) {
   const q = url.searchParams.get("q") || undefined;
 
   const where: Record<string, unknown> = {};
-  if (status && status !== "all") where.status = status;
+
+  // Hierarchical filtering: super_admins only see applications that admins
+  // have already reviewed (reviewed / approved / rejected / revoked).
+  // Regular admins see everything so they can process new submissions.
+  const superAdminStatuses = ["reviewed", "approved", "rejected", "revoked"];
+  if (admin.role === "super_admin") {
+    if (status && status !== "all") {
+      // If the super_admin explicitly filters by a status, honour it
+      // but only if it's one they're allowed to see.
+      if (superAdminStatuses.includes(status)) {
+        where.status = status;
+      } else {
+        // Requested a status they shouldn't see — return empty set
+        return NextResponse.json({ applications: [] });
+      }
+    } else {
+      // Default: only show statuses that have been admin-reviewed
+      where.status = { in: superAdminStatuses };
+    }
+  } else {
+    if (status && status !== "all") where.status = status;
+  }
+
   if (q) {
     where.OR = [
       { contactName: { contains: q } },

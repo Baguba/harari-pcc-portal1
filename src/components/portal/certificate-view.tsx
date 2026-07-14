@@ -1,9 +1,10 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Download, Printer } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { directive } from "@/lib/data";
+import { QRCodeSVG } from "qrcode.react";
 
 interface CertificateProps {
   holderName: string;
@@ -177,6 +178,7 @@ export function CertificateView({
   signatureUrl,
 }: CertificateProps) {
   const certRef = useRef<HTMLDivElement>(null);
+  const [verifyUrl, setVerifyUrl] = useState("");
 
   const issued = issuedDate ? new Date(issuedDate) : null;
   const validUntil = issued
@@ -189,6 +191,11 @@ export function CertificateView({
       month: "long",
       day: "numeric",
     });
+
+  // Build the verification URL on the client (needs window.location.origin)
+  useEffect(() => {
+    setVerifyUrl(`${window.location.origin}/verify?id=${applicationId}`);
+  }, [applicationId]);
 
   const handlePrint = () => {
     window.print();
@@ -328,6 +335,29 @@ export function CertificateView({
                   </span>
                 </div>
               </div>
+
+              {/* QR Code for verification */}
+              {verifyUrl && (
+                <div className="cert-qr-section">
+                  <div className="cert-qr-box">
+                    <QRCodeSVG
+                      value={verifyUrl}
+                      size={82}
+                      level="M"
+                      bgColor="transparent"
+                      fgColor="#1F2937"
+                      className="cert-qr-code"
+                    />
+                    <span className="cert-qr-label">
+                      {lang === "en"
+                        ? "Scan to verify"
+                        : lang === "am"
+                          ? "ለማረጋገጥ ስካን ያድርጉ"
+                          : "Mirkaneessuuf Iskaan godhi"}
+                    </span>
+                  </div>
+                </div>
+              )}
 
               {/* Signature section */}
               <div className="cert-signatures">

@@ -210,8 +210,12 @@ export function AdminApplications() {
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="all">All statuses</SelectItem>
-            <SelectItem value="submitted">Submitted</SelectItem>
-            <SelectItem value="under_review">Under Review</SelectItem>
+            {!isSuperAdmin && (
+              <>
+                <SelectItem value="submitted">Submitted</SelectItem>
+                <SelectItem value="under_review">Under Review</SelectItem>
+              </>
+            )}
             <SelectItem value="reviewed">Reviewed</SelectItem>
             <SelectItem value="approved">Approved</SelectItem>
             <SelectItem value="rejected">Rejected</SelectItem>
@@ -219,6 +223,12 @@ export function AdminApplications() {
           </SelectContent>
         </Select>
       </div>
+      {isSuperAdmin && (
+        <div className="text-xs text-muted-foreground bg-blue-500/10 border border-blue-500/20 rounded-md px-3 py-2 flex items-center gap-2">
+          <ShieldCheck className="h-3.5 w-3.5 text-blue-500 flex-shrink-0" aria-hidden />
+          Only applications reviewed by admins are shown here for your final decision.
+        </div>
+      )}
 
       {/* List */}
       {loading ? (
