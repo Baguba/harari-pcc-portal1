@@ -296,7 +296,7 @@ export function AdminUsers() {
                             onClick={() => toggleActive(u)}
                             className="h-8 w-8"
                             title={u.active ? "Deactivate" : "Activate"}
-                            disabled={u.id === session?.id}
+                            disabled={u.id === session?.id || u.role === "super_admin"}
                           >
                             <Power className="h-3.5 w-3.5" aria-hidden />
                           </Button>
@@ -422,6 +422,7 @@ export function AdminUsers() {
                 id="u-active"
                 checked={draft.active}
                 onCheckedChange={(v) => setDraft({ ...draft, active: v })}
+                disabled={draft.role === "super_admin"}
               />
               <Label htmlFor="u-active" className="text-xs">Active</Label>
             </div>

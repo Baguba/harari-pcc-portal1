@@ -27,7 +27,11 @@ async function hashPassword(plain: string): Promise<string> {
 }
 
 async function main() {
-  // --- Super Admin ---
+  // --- Super Admin ---git add .
+git commit -m "Updated hero title text"
+git push 
+
+
   const superAdmin = await db.user.upsert({
     where: { email: "superadmin@mcit.gov.et" },
     update: {},

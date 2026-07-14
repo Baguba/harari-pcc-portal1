@@ -55,11 +55,18 @@ export async function PATCH(
     );
   }
 
+  if (newStatus === "rejected" && (!reviewNote || reviewNote.trim() === "")) {
+    return NextResponse.json(
+      { error: "A comment is required when rejecting an application." },
+      { status: 400 }
+    );
+  }
+
 
   // Role-based status restrictions:
-  // Regular admins can only set: submitted, under_review, reviewed
+  // Regular admins can only set: submitted, under_review, reviewed, rejected
   // Super admins can set any status including: approved, rejected, revoked
-  const adminOnlyStatuses = ["submitted", "under_review", "reviewed"];
+  const adminOnlyStatuses = ["submitted", "under_review", "reviewed", "rejected"];
   if (admin.role === "admin" && !adminOnlyStatuses.includes(newStatus)) {
     return NextResponse.json(
       { error: "Only super administrators can approve, reject, or revoke applications." },

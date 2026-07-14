@@ -139,6 +139,10 @@ export function AdminApplications() {
       const ok = window.confirm("Are you sure you want to approve this application? Once approved, the approval cannot be removed.");
       if (!ok) return;
     }
+    if (newStatus === "rejected" && !reviewNote.trim()) {
+      toast.error("A comment is required when rejecting an application.");
+      return;
+    }
     setUpdating(true);
     try {
       const res = await authedFetch(`/api/applications/${selected.id}`, {
@@ -443,10 +447,10 @@ export function AdminApplications() {
                           <SelectItem value="submitted">Submitted</SelectItem>
                           <SelectItem value="under_review">Under Review</SelectItem>
                           <SelectItem value="reviewed">Reviewed</SelectItem>
+                          <SelectItem value="rejected">Rejected</SelectItem>
                           {isSuperAdmin && (
                             <>
                               <SelectItem value="approved">Approved</SelectItem>
-                              <SelectItem value="rejected">Rejected</SelectItem>
                               <SelectItem value="revoked">Revoked</SelectItem>
                             </>
                           )}
@@ -486,16 +490,6 @@ export function AdminApplications() {
                             Approve
                           </Button>
                         )}
-                        {newStatus !== "rejected" && (
-                          <Button
-                            variant="outline"
-                            onClick={() => setNewStatus("rejected")}
-                            className="gap-1.5 text-destructive border-destructive/30 hover:bg-destructive/5"
-                          >
-                            <XCircle className="h-4 w-4" aria-hidden />
-                            Reject
-                          </Button>
-                        )}
                       </>
                     ) : (
                       <>
@@ -510,6 +504,16 @@ export function AdminApplications() {
                           </Button>
                         )}
                       </>
+                    )}
+                    {newStatus !== "rejected" && (
+                      <Button
+                        variant="outline"
+                        onClick={() => setNewStatus("rejected")}
+                        className="gap-1.5 text-destructive border-destructive/30 hover:bg-destructive/5"
+                      >
+                        <XCircle className="h-4 w-4" aria-hidden />
+                        Reject
+                      </Button>
                     )}
                     {newStatus !== "under_review" && (
                       <Button
